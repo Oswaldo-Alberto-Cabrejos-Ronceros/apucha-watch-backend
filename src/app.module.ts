@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CarerProfleModule } from './carer-profle/carer-profle.module';
 import { CarerProfle } from './carer-profle/entities/carer-profle.entity';
+import { SeniorCitizenProfileModule } from './senior-citizen-profile/senior-citizen-profile.module';
+import { SeniorCitizenProfile } from './senior-citizen-profile/entities/senior-citizen-profile.entity';
 
 @Module({
   imports: [
@@ -20,12 +20,11 @@ import { CarerProfle } from './carer-profle/entities/carer-profle.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         synchronize: true,
-        entities: [CarerProfle],
+        entities: [CarerProfle, SeniorCitizenProfile],
       }),
     }),
     CarerProfleModule,
+    SeniorCitizenProfileModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}

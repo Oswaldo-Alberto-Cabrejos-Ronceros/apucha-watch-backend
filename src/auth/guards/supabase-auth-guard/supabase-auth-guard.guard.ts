@@ -6,6 +6,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { SupabaseClient } from '@supabase/supabase-js';
+import { CarerProfleService } from 'src/carer-profle/carer-profle.service';
 import { AuthenticationRequest } from 'src/common/models/authentication-request.model';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class SupabaseAuthGuardGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly supabaseClient: SupabaseClient,
+    private readonly carerProfleService: CarerProfleService,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
@@ -36,6 +38,7 @@ export class SupabaseAuthGuardGuard implements CanActivate {
       throw new UnauthorizedException('No token provided');
     }
     req.user = data.user;
+    //obtenemos rol
     return true;
   }
 }

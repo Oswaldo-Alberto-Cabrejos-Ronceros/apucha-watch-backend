@@ -37,8 +37,16 @@ export class SupabaseAuthGuardGuard implements CanActivate {
     if (error || !data?.user) {
       throw new UnauthorizedException('No token provided');
     }
-    req.user = data.user;
+
     //obtenemos rol
+    const carerProfile = await this.carerProfleService.findByUserId(
+      data.user.id,
+    );
+    if (!carerProfile) {
+      throw new UnauthorizedException('No rol provided');
+    }
+    req.user = data.user;
+    req.user.role = carerProfile.userType;
     return true;
   }
 }

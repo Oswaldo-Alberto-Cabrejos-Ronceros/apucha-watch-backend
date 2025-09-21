@@ -9,6 +9,7 @@ import { CaredSeniorCitizenModule } from './cared-senior-citizen/cared-senior-ci
 import { CaredSeniorCitizen } from './cared-senior-citizen/entities/cared-senior-citizen.entity';
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
+import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
 
 @Module({
   imports: [
@@ -32,6 +33,16 @@ import { AuthModule } from './auth/auth.module';
     CaredSeniorCitizenModule,
     SupabaseModule,
     AuthModule,
+  ],
+  providers: [
+    {
+      provide: 'APP_GUARD',
+      useClass: SupabaseAuthGuardGuard,
+    },
+    {
+      provide: 'APP_GUARD',
+      useClass: SupabaseAuthGuardGuard,
+    },
   ],
 })
 export class AppModule {}

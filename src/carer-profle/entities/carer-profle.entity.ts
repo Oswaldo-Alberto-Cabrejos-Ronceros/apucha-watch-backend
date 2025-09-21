@@ -12,6 +12,9 @@ import { UserType } from '../enum/user-type.enum';
 export class CarerProfle {
   @PrimaryGeneratedColumn()
   id: number;
+  //for user id from supabase auth
+  @Column({ type: 'uuid', unique: true })
+  userId: string;
   @Column()
   name: string;
   @Column()

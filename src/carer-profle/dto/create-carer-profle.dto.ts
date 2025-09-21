@@ -1,4 +1,4 @@
-import { IsNotEmpty, MaxLength } from 'class-validator';
+import { IsNotEmpty, IsUUID, MaxLength } from 'class-validator';
 
 export class CreateCarerProfleDto {
   @IsNotEmpty()
@@ -7,4 +7,7 @@ export class CreateCarerProfleDto {
   @IsNotEmpty()
   @MaxLength(72, { message: 'El nombre es muy largo, máximo 72 caracteres' })
   lastname: string;
+  @IsNotEmpty()
+  @IsUUID()
+  userId: string;
 }

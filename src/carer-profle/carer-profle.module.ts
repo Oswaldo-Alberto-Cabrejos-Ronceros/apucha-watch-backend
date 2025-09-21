@@ -8,5 +8,6 @@ import { CarerProfle } from './entities/carer-profle.entity';
   imports: [TypeOrmModule.forFeature([CarerProfle])],
   controllers: [CarerProfleController],
   providers: [CarerProfleService],
+  exports: [CarerProfleService],
 })
 export class CarerProfleModule {}

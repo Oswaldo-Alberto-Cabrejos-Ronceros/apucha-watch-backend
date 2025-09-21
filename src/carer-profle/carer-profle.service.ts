@@ -24,6 +24,13 @@ export class CarerProfleService {
     return await this.caredProfileRepository.findOneByOrFail({ id: id });
   }
 
+  //for find by user id from supabase auth
+  async findByUserId(userId: string) {
+    return await this.caredProfileRepository.findOneByOrFail({
+      userId: userId,
+    });
+  }
+
   async update(id: number, updateCarerProfleDto: UpdateCarerProfleDto) {
     const caredProfile = await this.findOne(id);
     if (

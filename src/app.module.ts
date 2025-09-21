@@ -7,6 +7,7 @@ import { SeniorCitizenProfileModule } from './senior-citizen-profile/senior-citi
 import { SeniorCitizenProfile } from './senior-citizen-profile/entities/senior-citizen-profile.entity';
 import { CaredSeniorCitizenModule } from './cared-senior-citizen/cared-senior-citizen.module';
 import { CaredSeniorCitizen } from './cared-senior-citizen/entities/cared-senior-citizen.entity';
+import { SupabaseModule } from './supabase/supabase.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { CaredSeniorCitizen } from './cared-senior-citizen/entities/cared-senior
     CarerProfleModule,
     SeniorCitizenProfileModule,
     CaredSeniorCitizenModule,
+    SupabaseModule,
   ],
 })
 export class AppModule {}

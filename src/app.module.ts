@@ -10,6 +10,7 @@ import { CaredSeniorCitizen } from './cared-senior-citizen/entities/cared-senior
 import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
+import { DeviceModule } from './device/device.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supaba
     CaredSeniorCitizenModule,
     SupabaseModule,
     AuthModule,
+    DeviceModule,
   ],
   providers: [
     {

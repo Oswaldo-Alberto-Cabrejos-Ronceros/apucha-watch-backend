@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VitalSignService } from './vital-signs.service';
 import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { UpdateVitalSignDto } from './dto/update-vital-sign.dto';
@@ -23,7 +31,10 @@ export class VitalSignController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateVitalSignDto: UpdateVitalSignDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateVitalSignDto: UpdateVitalSignDto,
+  ) {
     return this.vitalSignService.update(+id, updateVitalSignDto);
   }
 

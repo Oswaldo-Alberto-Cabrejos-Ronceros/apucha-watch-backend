@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsUUID, IsDateString, IsNumber } from 'class-validator';
 
 export class CreateUbicationDto {
-    @IsNotEmpty()
+  @IsNotEmpty()
   @IsUUID()
   deviceCode: string;
 

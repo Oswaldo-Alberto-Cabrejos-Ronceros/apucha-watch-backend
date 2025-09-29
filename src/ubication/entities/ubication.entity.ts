@@ -1,12 +1,21 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+  JoinColumn,
+} from 'typeorm';
 import { Device } from '../../device/entities/device.entity';
 
 @Entity({ name: 'ubications' })
 export class Ubication {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'uuid' })
+  @Column({ type: 'uuid' })
   deviceCode: string;
 
   @Column({ type: 'timestamp' })

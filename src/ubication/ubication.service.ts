@@ -27,12 +27,17 @@ export class UbicationService {
       relations: ['device'],
     });
     if (!ubication) {
-      throw new NotFoundException(`La ubicación con ID ${id} no fue encontrada`);
+      throw new NotFoundException(
+        `La ubicación con ID ${id} no fue encontrada`,
+      );
     }
     return ubication;
   }
 
-  async update(id: number, updateUbicationDto: UpdateUbicationDto): Promise<Ubication> {
+  async update(
+    id: number,
+    updateUbicationDto: UpdateUbicationDto,
+  ): Promise<Ubication> {
     await this.ubicationRepository.update(id, updateUbicationDto);
     return this.findOne(id);
   }
@@ -40,7 +45,9 @@ export class UbicationService {
   async remove(id: number): Promise<void> {
     const result = await this.ubicationRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`La ubicación con ID ${id} no fue encontrada`);
+      throw new NotFoundException(
+        `La ubicación con ID ${id} no fue encontrada`,
+      );
     }
   }
 }

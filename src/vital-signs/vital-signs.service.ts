@@ -28,13 +28,18 @@ export class VitalSignService {
     });
 
     if (!vitalSign) {
-      throw new NotFoundException(`No se encontró un registro de signos vitales con el ID ${id}`);
+      throw new NotFoundException(
+        `No se encontró un registro de signos vitales con el ID ${id}`,
+      );
     }
 
     return vitalSign;
   }
 
-  async update(id: number, updateVitalSignDto: UpdateVitalSignDto): Promise<VitalSign> {
+  async update(
+    id: number,
+    updateVitalSignDto: UpdateVitalSignDto,
+  ): Promise<VitalSign> {
     await this.vitalSignRepository.update(id, updateVitalSignDto);
     return this.findOne(id);
   }
@@ -42,7 +47,9 @@ export class VitalSignService {
   async remove(id: number): Promise<void> {
     const result = await this.vitalSignRepository.delete(id);
     if (result.affected === 0) {
-      throw new NotFoundException(`No se encontró un registro de signos vitales con el ID ${id}`);
+      throw new NotFoundException(
+        `No se encontró un registro de signos vitales con el ID ${id}`,
+      );
     }
   }
 }

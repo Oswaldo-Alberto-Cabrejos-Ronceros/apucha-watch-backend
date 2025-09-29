@@ -12,6 +12,7 @@ import { AuthModule } from './auth/auth.module';
 import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
 import { DeviceModule } from './device/device.module';
 import { UbicationModule } from './ubication/ubication.module';
+import { VitalSignsModule } from './vital-signs/vital-signs.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { UbicationModule } from './ubication/ubication.module';
     AuthModule,
     DeviceModule,
     UbicationModule,
+    VitalSignsModule,
   ],
   providers: [
     {

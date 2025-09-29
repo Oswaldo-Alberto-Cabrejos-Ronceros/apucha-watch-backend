@@ -7,6 +7,7 @@ import { Column,
   UpdateDateColumn, 
 } from 'typeorm';
 import { Ubication } from '../../ubication/entities/ubication.entity';
+import { VitalSign } from '../../vital-signs/entities/vital-sign.entity';
 
 @Entity({ name: 'devices' })
 export class Device {
@@ -27,4 +28,7 @@ export class Device {
 
   @OneToMany(() => Ubication, (ubication) => ubication.device)
   ubications: Ubication[];
+
+  @OneToMany(() => VitalSign, (vitalSigns) => vitalSigns.device)
+  vitalSigns: VitalSign[];
 }

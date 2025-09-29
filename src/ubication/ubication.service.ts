@@ -1,26 +1,46 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Ubication } from './entities/ubication.entity';
 import { CreateUbicationDto } from './dto/create-ubication.dto';
 import { UpdateUbicationDto } from './dto/update-ubication.dto';
 
 @Injectable()
 export class UbicationService {
-  create(createUbicationDto: CreateUbicationDto) {
-    return 'This action adds a new ubication';
+  constructor(
+    @InjectRepository(Ubication)
+    private readonly ubicationRepository: Repository<Ubication>,
+  ) {}
+
+  async create(createUbicationDto: CreateUbicationDto): Promise<Ubication> {
+    const ubication = this.ubicationRepository.create(createUbicationDto);
+    return this.ubicationRepository.save(ubication);
   }
 
-  findAll() {
-    return `This action returns all ubication`;
+  async findAll(): Promise<Ubication[]> {
+    return this.ubicationRepository.find({ relations: ['device'] });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} ubication`;
+  async findOne(id: number): Promise<Ubication> {
+    const ubication = await this.ubicationRepository.findOne({
+      where: { id },
+      relations: ['device'],
+    });
+    if (!ubication) {
+      throw new NotFoundException(`La ubicación con ID ${id} no fue encontrada`);
+    }
+    return ubication;
   }
 
-  update(id: number, updateUbicationDto: UpdateUbicationDto) {
-    return `This action updates a #${id} ubication`;
+  async update(id: number, updateUbicationDto: UpdateUbicationDto): Promise<Ubication> {
+    await this.ubicationRepository.update(id, updateUbicationDto);
+    return this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ubication`;
+  async remove(id: number): Promise<void> {
+    const result = await this.ubicationRepository.delete(id);
+    if (result.affected === 0) {
+      throw new NotFoundException(`La ubicación con ID ${id} no fue encontrada`);
+    }
   }
 }

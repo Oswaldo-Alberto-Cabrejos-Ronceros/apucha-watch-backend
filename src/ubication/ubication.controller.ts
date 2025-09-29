@@ -3,7 +3,7 @@ import { UbicationService } from './ubication.service';
 import { CreateUbicationDto } from './dto/create-ubication.dto';
 import { UpdateUbicationDto } from './dto/update-ubication.dto';
 
-@Controller('ubication')
+@Controller('ubications')
 export class UbicationController {
   constructor(private readonly ubicationService: UbicationService) {}
 

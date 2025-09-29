@@ -1,10 +1,12 @@
 import { Column, 
   CreateDateColumn, 
   DeleteDateColumn, 
-  Entity, 
+  Entity,
+  OneToMany, 
   PrimaryGeneratedColumn, 
   UpdateDateColumn, 
 } from 'typeorm';
+import { Ubication } from '../../ubication/entities/ubication.entity';
 
 @Entity({ name: 'devices' })
 export class Device {
@@ -22,4 +24,7 @@ export class Device {
 
   @DeleteDateColumn()
   deleteAt?: Date;
+
+  @OneToMany(() => Ubication, (ubication) => ubication.device)
+  ubications: Ubication[];
 }

@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, DeleteDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn, JoinColumn } from 'typeorm';
 import { Device } from '../../device/entities/device.entity';
 
 @Entity({ name: 'ubications' })
@@ -36,6 +36,7 @@ export class Ubication {
   @DeleteDateColumn()
   deleteAt?: Date;
 
-  @ManyToOne(() => Device, (device) => device.ubications, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Device, (device) => device.ubications)
+  @JoinColumn({ name: 'deviceCode', referencedColumnName: 'code' })
   device: Device;
 }

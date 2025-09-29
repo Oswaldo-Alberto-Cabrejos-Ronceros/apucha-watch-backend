@@ -1,35 +1,51 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+} from '@nestjs/common';
+import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
-import { Device } from './entities/device.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 
-@Injectable()
-export class DeviceService {
-  constructor(
-    @InjectRepository(Device)
-    private readonly deviceRepository: Repository<Device>,
-  ) {}
+@Controller('devices')
+export class DeviceController {
+  constructor(private readonly deviceService: DeviceService) {}
 
-  async create(createDeviceDto: CreateDeviceDto) {
-    const entity = this.deviceRepository.create(createDeviceDto);
-    return await this.deviceRepository.save(entity);
+  @Post()
+  create(@Body() createDeviceDto: CreateDeviceDto) {
+    return this.deviceService.create(createDeviceDto);
   }
 
+  @Get()
   findAll() {
-    return `This action returns all device`;
+    return this.deviceService.findAll();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} device`;
+  @Get(':id')
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.findOne(id);
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto) {
-    return `This action updates a #${id} device`;
+  @Patch(':id')
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDeviceDto: UpdateDeviceDto,
+  ) {
+    return this.deviceService.update(id, updateDeviceDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} device`;
+  @Delete(':id')
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.remove(id);
+  }
+
+  @Patch('restore/:id')
+  restore(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.restore(id);
   }
 }

@@ -15,6 +15,10 @@ export class CreateUbicationDto {
 
   @IsNotEmpty()
   @IsNumber()
+  longitude: number;
+
+  @IsNotEmpty()
+  @IsNumber()
   altitude: number;
 
   @IsNotEmpty()

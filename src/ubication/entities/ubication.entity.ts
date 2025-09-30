@@ -25,6 +25,9 @@ export class Ubication {
   latitude: number;
 
   @Column({ type: 'float' })
+  longitude: number;
+
+  @Column({ type: 'float' })
   altitude: number;
 
   @Column({ type: 'float' })

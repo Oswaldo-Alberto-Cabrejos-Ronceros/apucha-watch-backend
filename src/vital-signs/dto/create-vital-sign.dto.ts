@@ -1,3 +1,4 @@
+import { Type } from 'class-transformer';
 import { IsNotEmpty, IsNumber, IsString, IsDate } from 'class-validator';
 
 export class CreateVitalSignDto {
@@ -5,8 +6,8 @@ export class CreateVitalSignDto {
   @IsNotEmpty()
   deviceCode: string;
 
+  @Type(() => Date)
   @IsDate()
-  @IsNotEmpty()
   timeStamp: Date;
 
   @IsNumber()

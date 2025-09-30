@@ -10,13 +10,19 @@ import {
 import { UbicationService } from './ubication.service';
 import { CreateUbicationDto } from './dto/create-ubication.dto';
 import { UpdateUbicationDto } from './dto/update-ubication.dto';
+import { UbicationGateway } from './ubication.gateway';
 
 @Controller('ubications')
 export class UbicationController {
-  constructor(private readonly ubicationService: UbicationService) {}
+  constructor(
+    private readonly ubicationService: UbicationService,
+    private readonly ubicationGateway: UbicationGateway,
+  ) {}
 
   @Post()
   create(@Body() createUbicationDto: CreateUbicationDto) {
+    //emit for webSocket
+    this.ubicationGateway.sendUbication(createUbicationDto);
     return this.ubicationService.create(createUbicationDto);
   }
 

@@ -38,7 +38,15 @@ export class UbicationService {
     id: number,
     updateUbicationDto: UpdateUbicationDto,
   ): Promise<Ubication> {
-    await this.ubicationRepository.update(id, updateUbicationDto);
+    const result = await this.ubicationRepository.update(
+      id,
+      updateUbicationDto,
+    );
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `La ubicación con ID ${id} no fue encontrada`,
+      );
+    }
     return this.findOne(id);
   }
 

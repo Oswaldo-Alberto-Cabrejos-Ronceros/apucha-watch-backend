@@ -1,51 +1,52 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  ParseIntPipe,
-} from '@nestjs/common';
-import { DeviceService } from './device.service';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Device } from './entities/device.entity';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
-@Controller('devices')
-export class DeviceController {
-  constructor(private readonly deviceService: DeviceService) {}
+@Injectable()
+export class DeviceService {
+  constructor(
+    @InjectRepository(Device)
+    private readonly deviceRepository: Repository<Device>,
+  ) {}
 
-  @Post()
-  create(@Body() createDeviceDto: CreateDeviceDto) {
-    return this.deviceService.create(createDeviceDto);
+  async create(createDeviceDto: CreateDeviceDto): Promise<Device> {
+    const device = this.deviceRepository.create(createDeviceDto);
+    return await this.deviceRepository.save(device);
   }
 
-  @Get()
-  findAll() {
-    return this.deviceService.findAll();
+  async findAll(): Promise<Device[]> {
+    return await this.deviceRepository.find({
+      relations: ['ubications', 'vitalSigns'],
+    });
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.deviceService.findOne(id);
+  async findOne(id: number): Promise<Device> {
+    const device = await this.deviceRepository.findOne({
+      where: { id },
+      relations: ['ubications', 'vitalSigns'],
+    });
+    if (!device) {
+      throw new NotFoundException(`Device con id ${id} no encontrado`);
+    }
+    return device;
   }
 
-  @Patch(':id')
-  update(
-    @Param('id', ParseIntPipe) id: number,
-    @Body() updateDeviceDto: UpdateDeviceDto,
-  ) {
-    return this.deviceService.update(id, updateDeviceDto);
+  async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    const device = await this.findOne(id);
+    Object.assign(device, updateDeviceDto);
+    return await this.deviceRepository.save(device);
   }
 
-  @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.deviceService.remove(id);
+  async remove(id: number): Promise<void> {
+    const device = await this.findOne(id);
+    await this.deviceRepository.softRemove(device);
   }
 
-  @Patch('restore/:id')
-  restore(@Param('id', ParseIntPipe) id: number) {
-    return this.deviceService.restore(id);
+  async restore(id: number): Promise<Device> {
+    await this.deviceRepository.restore(id);
+    return this.findOne(id);
   }
 }

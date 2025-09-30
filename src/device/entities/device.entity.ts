@@ -1,10 +1,11 @@
-import { Column, 
-  CreateDateColumn, 
-  DeleteDateColumn, 
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
   Entity,
-  OneToMany, 
-  PrimaryGeneratedColumn, 
-  UpdateDateColumn, 
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { Ubication } from '../../ubication/entities/ubication.entity';
 import { VitalSign } from '../../vital-signs/entities/vital-sign.entity';

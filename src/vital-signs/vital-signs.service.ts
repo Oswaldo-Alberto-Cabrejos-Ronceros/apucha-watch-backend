@@ -40,7 +40,15 @@ export class VitalSignService {
     id: number,
     updateVitalSignDto: UpdateVitalSignDto,
   ): Promise<VitalSign> {
-    await this.vitalSignRepository.update(id, updateVitalSignDto);
+    const result = await this.vitalSignRepository.update(
+      id,
+      updateVitalSignDto,
+    );
+    if (result.affected === 0) {
+      throw new NotFoundException(
+        `No se encontró un registro de signos vitales con el ID ${id}`,
+      );
+    }
     return this.findOne(id);
   }
 

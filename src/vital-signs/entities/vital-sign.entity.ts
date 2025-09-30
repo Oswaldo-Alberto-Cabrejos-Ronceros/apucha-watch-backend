@@ -16,13 +16,13 @@ export class VitalSign {
   deviceCode: string;
 
   @Column({ type: 'timestamp' })
-  timestamp: Date;
+  timeStamp: Date;
 
   @Column('int')
   heartRate: number;
 
   @Column('int')
-  oxigenSaturation: number;
+  oxygenSaturation: number;
 
   @ManyToOne(() => Device, (device) => device.vitalSigns)
   @JoinColumn({ name: 'deviceCode', referencedColumnName: 'code' })

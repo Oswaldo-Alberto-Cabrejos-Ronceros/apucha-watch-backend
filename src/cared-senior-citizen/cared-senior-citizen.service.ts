@@ -55,4 +55,13 @@ export class CaredSeniorCitizenService {
       } as CheckLinkageResponseDto;
     }
   }
+
+  //for return seniors profile by cared profile
+  async getAllByCaredProfileId(caredProfileId: number) {
+    return this.caredSeniorCitizenRepository.findBy({
+      carerProfile: {
+        id: caredProfileId,
+      },
+    });
+  }
 }

@@ -11,7 +11,11 @@ export class CreateUbicationDto {
 
   @IsNotEmpty()
   @IsNumber()
-6
+  latitude: number;
+
+  @IsNotEmpty()
+  @IsNumber()
+  longitude: number;
 
   @IsNotEmpty()
   @IsNumber()

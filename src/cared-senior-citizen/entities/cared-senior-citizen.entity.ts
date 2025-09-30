@@ -1,4 +1,5 @@
 import { CarerProfle } from 'src/carer-profle/entities/carer-profle.entity';
+import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
 import {
   CreateDateColumn,
   Entity,
@@ -17,8 +18,8 @@ export class CaredSeniorCitizen {
   @JoinColumn({ name: 'carer_profile_id' })
   carerProfile: CarerProfle;
   @JoinColumn({ name: 'senior_citizen_profile_id' })
-  @ManyToOne(() => CarerProfle)
-  seniorCitizenProfile: CarerProfle;
+  @ManyToOne(() => SeniorCitizenProfile)
+  seniorCitizenProfile: SeniorCitizenProfile;
   @CreateDateColumn()
   createAt: Date;
 }

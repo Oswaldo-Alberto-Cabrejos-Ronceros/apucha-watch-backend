@@ -35,4 +35,9 @@ export class CaredSeniorCitizenController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.caredSeniorCitizenService.remove(id);
   }
+
+  @Get('check-linkage/:deviceCode')
+  checkLinkage(@Param('deviceCode') deviceCode: string) {
+    return this.caredSeniorCitizenService.checkLinkage(deviceCode);
+  }
 }

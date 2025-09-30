@@ -13,6 +13,9 @@ import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supaba
 import { DeviceModule } from './device/device.module';
 import { UbicationModule } from './ubication/ubication.module';
 import { VitalSignsModule } from './vital-signs/vital-signs.module';
+import { Device } from './device/entities/device.entity';
+import { Ubication } from './ubication/entities/ubication.entity';
+import { VitalSign } from './vital-signs/entities/vital-sign.entity';
 
 @Module({
   imports: [
@@ -28,7 +31,14 @@ import { VitalSignsModule } from './vital-signs/vital-signs.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         synchronize: true,
-        entities: [CarerProfle, SeniorCitizenProfile, CaredSeniorCitizen],
+        entities: [
+          CarerProfle,
+          SeniorCitizenProfile,
+          CaredSeniorCitizen,
+          Device,
+          Ubication,
+          VitalSign,
+        ],
       }),
     }),
     CarerProfleModule,

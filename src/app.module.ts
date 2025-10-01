@@ -16,6 +16,7 @@ import { VitalSignsModule } from './vital-signs/vital-signs.module';
 import { Device } from './device/entities/device.entity';
 import { Ubication } from './ubication/entities/ubication.entity';
 import { VitalSign } from './vital-signs/entities/vital-sign.entity';
+import { DeviceRoomModule } from './device-room/device-room.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { VitalSign } from './vital-signs/entities/vital-sign.entity';
     DeviceModule,
     UbicationModule,
     VitalSignsModule,
+    DeviceRoomModule,
   ],
   providers: [
     {

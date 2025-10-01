@@ -21,7 +21,6 @@ export class VitalSignsGateway {
     @MessageBody() data: { deviceId: string },
     @ConnectedSocket() client: Socket,
   ) {
-    console.log('Suscribiendose con:' + data.deviceId);
     return this.deviceRoomDevice.subscribeToDevice(client, data.deviceId);
   }
 

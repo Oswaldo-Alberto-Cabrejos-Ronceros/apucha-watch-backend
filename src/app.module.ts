@@ -11,7 +11,8 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
 import { DeviceModule } from './device/device.module';
-
+import { FallService } from './fall/fall.service';
+import { FallModule } from './fall/fall.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -35,6 +36,7 @@ import { DeviceModule } from './device/device.module';
     SupabaseModule,
     AuthModule,
     DeviceModule,
+    FallModule,
   ],
   providers: [
     {
@@ -45,6 +47,7 @@ import { DeviceModule } from './device/device.module';
       provide: 'APP_GUARD',
       useClass: SupabaseAuthGuardGuard,
     },
+    FallService,
   ],
 })
 export class AppModule {}

@@ -8,7 +8,10 @@ export class SocketAuthMiddleware {
   constructor(private readonly supabaseAuthService: SupabaseAuthService) {}
   use = async (socket: AuthenticationSocket, next: (err?: Error) => void) => {
     try {
-      const token = socket.handshake.auth?.token as string | undefined;
+      //para producion
+      //const token = socket.handshake.auth?.token as string | undefined;
+      //para pruebas en local con postman
+      const token = socket.handshake.query.token as string | undefined;
       if (!token) throw new Error('Token no encontrado');
       const user = await this.supabaseAuthService.verifyToken(token);
       socket.user = user;

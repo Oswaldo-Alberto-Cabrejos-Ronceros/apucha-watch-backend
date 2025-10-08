@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { createClient } from '@supabase/supabase-js';
-import { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/SupabaseAuthClient';
+import { SupabaseAuthService } from './supabase-auth.service';
 @Global()
 @Module({
   imports: [
@@ -22,7 +22,7 @@ import { SupabaseAuthClient } from '@supabase/supabase-js/dist/module/lib/Supaba
         return createClient(supabaseUrl, supabaseKey);
       },
     },
-    SupabaseAuthClient,
+    SupabaseAuthService,
   ],
   exports: ['SUPABASE_CLIENT'],
 })

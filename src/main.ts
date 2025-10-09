@@ -7,6 +7,7 @@ import { TypeORMNotFoundInterceptor } from './common/interceptors/typeorm-not-fo
 import { SupabaseAuthService } from './supabase/supabase-auth.service';
 import { AuthenticationSocketIoAdapter } from './common/adapters/authentication-socket-io.adapter';
 import { SocketAuthMiddleware } from './common/middlewares/socket-auth.middleware';
+import { Transport } from '@nestjs/microservices';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -39,6 +40,14 @@ async function bootstrap() {
     documentationConfig,
   );
   SwaggerModule.setup('api', app, swaggerDocument);
+  //enable mqtt
+  app.connectMicroservice({
+    transport: Transport.MQTT,
+    options: {
+      url: process.env.MQTT_BROKER_URL || 'mqtt://localhost:1883',
+    },
+  });
+  await app.startAllMicroservices();
   await app.listen(process.env.PORT ?? 3000);
 }
 void bootstrap();

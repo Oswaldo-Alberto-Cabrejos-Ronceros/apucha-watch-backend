@@ -17,6 +17,8 @@ import { Device } from './device/entities/device.entity';
 import { Ubication } from './ubication/entities/ubication.entity';
 import { VitalSign } from './vital-signs/entities/vital-sign.entity';
 import { DeviceRoomModule } from './device-room/device-room.module';
+import { VitalSignsSummaryModule } from './vital-signs-summary/vital-signs-summary.module';
+import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-summary.entity';
 
 @Module({
   imports: [
@@ -39,6 +41,7 @@ import { DeviceRoomModule } from './device-room/device-room.module';
           Device,
           Ubication,
           VitalSign,
+          VitalSignsSummary,
         ],
       }),
     }),
@@ -51,6 +54,7 @@ import { DeviceRoomModule } from './device-room/device-room.module';
     UbicationModule,
     VitalSignsModule,
     DeviceRoomModule,
+    VitalSignsSummaryModule,
   ],
   providers: [
     {

@@ -8,6 +8,7 @@ export class VitalSignScredule {
   private readonly logger = new Logger(VitalSignScredule.name);
   constructor(private readonly datasource: DataSource) {}
   //cada hora, mas de una hora promedio de 30s
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   @Cron(CronExpression.EVERY_HOUR)
   async aggregate30s() {
     await this.aggregateAndClean(
@@ -31,6 +32,7 @@ export class VitalSignScredule {
   }
 
   //cada dia promedia de 1 min a 5 min
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
   @Cron(CronExpression.EVERY_DAY_AT_MIDNIGHT)
   async aggregate5min() {
     await this.aggregateAndClean(

@@ -1,9 +1,10 @@
-import { Logger } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { VitalSignService } from './vital-signs.service';
 import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { VitalSignsGateway } from './vital-signs.gateway';
 
+@Controller()
 export class VitalSignsMqttController {
   private readonly logger = new Logger(VitalSignsMqttController.name);
   constructor(

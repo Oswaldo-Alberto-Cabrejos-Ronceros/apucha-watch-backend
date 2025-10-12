@@ -31,6 +31,11 @@ export class CaredProfileController {
     return this.caredProfileService.findOne(id);
   }
 
+  @Get('by-user/:userId')
+  findByUserId(@Param('userId') userId: string) {
+    return this.caredProfileService.findByUserId(userId);
+  }
+
   @Patch(':id')
   update(
     @Param('id', ParseIntPipe) id: number,

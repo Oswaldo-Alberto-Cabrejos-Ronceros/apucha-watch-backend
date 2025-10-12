@@ -15,7 +15,7 @@ export class Device {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'uuid', unique: true })
+  @Column({ unique: true })
   code: string;
 
   @CreateDateColumn()

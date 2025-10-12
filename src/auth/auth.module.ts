@@ -2,13 +2,13 @@ import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
 
-import { CarerProfleModule } from 'src/carer-profle/carer-profle.module';
+import { CaredProfileModule } from 'src/cared-profile/cared-profile.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CarerProfle } from 'src/carer-profle/entities/carer-profle.entity';
+import { CaredProfile } from 'src/cared-profile/entities/cared-profile.entity';
 
 @Module({
   controllers: [AuthController],
   providers: [AuthService],
-  imports: [TypeOrmModule.forFeature([CarerProfle]), CarerProfleModule],
+  imports: [TypeOrmModule.forFeature([CaredProfile]), CaredProfileModule],
 })
 export class AuthModule {}

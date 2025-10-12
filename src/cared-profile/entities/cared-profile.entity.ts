@@ -8,8 +8,8 @@ import {
 } from 'typeorm';
 import { UserType } from '../enum/user-type.enum';
 
-@Entity({ name: 'carer_profiles' })
-export class CarerProfle {
+@Entity({ name: 'cared_profiles' })
+export class CaredProfile {
   @PrimaryGeneratedColumn()
   id: number;
   //for user id from supabase auth

@@ -11,7 +11,9 @@ describe('SeniorCitizenProfileController', () => {
       providers: [SeniorCitizenProfileService],
     }).compile();
 
-    controller = module.get<SeniorCitizenProfileController>(SeniorCitizenProfileController);
+    controller = module.get<SeniorCitizenProfileController>(
+      SeniorCitizenProfileController,
+    );
   });
 
   it('should be defined', () => {

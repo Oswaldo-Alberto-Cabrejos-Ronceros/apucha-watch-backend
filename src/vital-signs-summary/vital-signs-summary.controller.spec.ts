@@ -11,7 +11,9 @@ describe('VitalSignsSummaryController', () => {
       providers: [VitalSignsSummaryService],
     }).compile();
 
-    controller = module.get<VitalSignsSummaryController>(VitalSignsSummaryController);
+    controller = module.get<VitalSignsSummaryController>(
+      VitalSignsSummaryController,
+    );
   });
 
   it('should be defined', () => {

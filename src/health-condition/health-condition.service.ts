@@ -18,7 +18,9 @@ export class HealthConditionService {
   }
 
   async findAll() {
-    return await this.repo.find({ relations: ['healthConditionRecommendations'] });
+    return await this.repo.find({
+      relations: ['healthConditionRecommendations'],
+    });
   }
 
   async findOne(id: number) {

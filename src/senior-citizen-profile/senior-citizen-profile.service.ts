@@ -12,9 +12,10 @@ export class SeniorCitizenProfileService {
     private readonly seniorCitizenProfileRepository: Repository<SeniorCitizenProfile>,
   ) {}
   async create(createSeniorCitizenProfileDto: CreateSeniorCitizenProfileDto) {
-    const entity = this.seniorCitizenProfileRepository.create(
-      createSeniorCitizenProfileDto,
-    );
+    const entity = this.seniorCitizenProfileRepository.create({
+      ...createSeniorCitizenProfileDto,
+      device: { id: createSeniorCitizenProfileDto.deviceId },
+    });
     return await this.seniorCitizenProfileRepository.save(entity);
   }
 

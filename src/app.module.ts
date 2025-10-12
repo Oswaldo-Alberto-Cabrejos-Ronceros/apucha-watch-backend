@@ -11,8 +11,20 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
 import { DeviceModule } from './device/device.module';
+
 import { FallService } from './fall/fall.service';
 import { FallModule } from './fall/fall.module';
+=======
+import { UbicationModule } from './ubication/ubication.module';
+import { VitalSignsModule } from './vital-signs/vital-signs.module';
+import { Device } from './device/entities/device.entity';
+import { Ubication } from './ubication/entities/ubication.entity';
+import { VitalSign } from './vital-signs/entities/vital-sign.entity';
+import { DeviceRoomModule } from './device-room/device-room.module';
+import { VitalSignsSummaryModule } from './vital-signs-summary/vital-signs-summary.module';
+import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-summary.entity';
+
+
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -27,7 +39,15 @@ import { FallModule } from './fall/fall.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         synchronize: true,
-        entities: [CarerProfle, SeniorCitizenProfile, CaredSeniorCitizen],
+        entities: [
+          CarerProfle,
+          SeniorCitizenProfile,
+          CaredSeniorCitizen,
+          Device,
+          Ubication,
+          VitalSign,
+          VitalSignsSummary,
+        ],
       }),
     }),
     CarerProfleModule,
@@ -36,7 +56,14 @@ import { FallModule } from './fall/fall.module';
     SupabaseModule,
     AuthModule,
     DeviceModule,
+
     FallModule,
+
+    UbicationModule,
+    VitalSignsModule,
+    DeviceRoomModule,
+    VitalSignsSummaryModule,
+
   ],
   providers: [
     {

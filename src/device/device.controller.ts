@@ -6,12 +6,13 @@ import {
   Patch,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
 
-@Controller('device')
+@Controller('devices')
 export class DeviceController {
   constructor(private readonly deviceService: DeviceService) {}
 
@@ -26,17 +27,25 @@ export class DeviceController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.deviceService.findOne(+id);
+  findOne(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
-    return this.deviceService.update(+id, updateDeviceDto);
+  update(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateDeviceDto: UpdateDeviceDto,
+  ) {
+    return this.deviceService.update(id, updateDeviceDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.deviceService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.remove(id);
+  }
+
+  @Patch('restore/:id')
+  restore(@Param('id', ParseIntPipe) id: number) {
+    return this.deviceService.restore(id);
   }
 }

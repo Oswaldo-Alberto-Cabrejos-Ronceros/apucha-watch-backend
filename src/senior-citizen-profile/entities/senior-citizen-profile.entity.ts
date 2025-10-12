@@ -1,8 +1,11 @@
+import { Device } from 'src/device/entities/device.entity';
 import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  JoinColumn,
+  OneToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -17,6 +20,9 @@ export class SeniorCitizenProfile {
   lastname: string;
   @Column()
   birthdate: Date;
+  @OneToOne(() => Device)
+  @JoinColumn({ name: 'device_id' })
+  device: Device;
   @CreateDateColumn()
   createAt: Date;
   @UpdateDateColumn()

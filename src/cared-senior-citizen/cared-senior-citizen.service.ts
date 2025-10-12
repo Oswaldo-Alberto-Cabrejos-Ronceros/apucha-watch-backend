@@ -3,6 +3,7 @@ import { CreateCaredSeniorCitizenDto } from './dto/create-cared-senior-citizen.d
 import { InjectRepository } from '@nestjs/typeorm';
 import { CaredSeniorCitizen } from './entities/cared-senior-citizen.entity';
 import { Repository } from 'typeorm';
+import { CheckLinkageResponseDto } from './dto/check-linkage.response.dto';
 
 @Injectable()
 export class CaredSeniorCitizenService {
@@ -31,5 +32,36 @@ export class CaredSeniorCitizenService {
   async remove(id: number) {
     const caredSeniorCitizen = await this.findOne(id);
     return await this.caredSeniorCitizenRepository.delete(caredSeniorCitizen);
+  }
+  //for check linkage
+  async checkLinkage(deviceCode: string) {
+    const exist = await this.caredSeniorCitizenRepository.exists({
+      where: {
+        seniorCitizenProfile: {
+          device: {
+            code: deviceCode,
+          },
+        },
+      },
+    });
+    if (exist) {
+      return {
+        linked: true,
+        fecha: new Date(),
+      } as CheckLinkageResponseDto;
+    } else {
+      return {
+        linked: false,
+      } as CheckLinkageResponseDto;
+    }
+  }
+
+  //for return seniors profile by cared profile
+  async getAllByCaredProfileId(caredProfileId: number) {
+    return this.caredSeniorCitizenRepository.findBy({
+      carerProfile: {
+        id: caredProfileId,
+      },
+    });
   }
 }

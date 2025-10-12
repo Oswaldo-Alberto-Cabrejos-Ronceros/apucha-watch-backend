@@ -11,6 +11,10 @@ import { SupabaseModule } from './supabase/supabase.module';
 import { AuthModule } from './auth/auth.module';
 import { SupabaseAuthGuardGuard } from './auth/guards/supabase-auth-guard/supabase-auth-guard.guard';
 import { DeviceModule } from './device/device.module';
+
+import { FallService } from './fall/fall.service';
+import { FallModule } from './fall/fall.module';
+=======
 import { UbicationModule } from './ubication/ubication.module';
 import { VitalSignsModule } from './vital-signs/vital-signs.module';
 import { Device } from './device/entities/device.entity';
@@ -19,6 +23,7 @@ import { VitalSign } from './vital-signs/entities/vital-sign.entity';
 import { DeviceRoomModule } from './device-room/device-room.module';
 import { VitalSignsSummaryModule } from './vital-signs-summary/vital-signs-summary.module';
 import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-summary.entity';
+
 
 @Module({
   imports: [
@@ -51,10 +56,14 @@ import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-su
     SupabaseModule,
     AuthModule,
     DeviceModule,
+
+    FallModule,
+
     UbicationModule,
     VitalSignsModule,
     DeviceRoomModule,
     VitalSignsSummaryModule,
+
   ],
   providers: [
     {
@@ -65,6 +74,7 @@ import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-su
       provide: 'APP_GUARD',
       useClass: SupabaseAuthGuardGuard,
     },
+    FallService,
   ],
 })
 export class AppModule {}

@@ -5,7 +5,7 @@ export class CreateCaredSeniorCitizenDto {
   @Type(() => Number)
   @IsInt()
   @IsPositive()
-  carerProfileId: number;
+  caredProfileId: number;
   @Type(() => Number)
   @IsInt()
   @IsPositive()

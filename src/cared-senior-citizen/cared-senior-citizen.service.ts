@@ -4,7 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { CaredSeniorCitizen } from './entities/cared-senior-citizen.entity';
 import { Repository } from 'typeorm';
 import { CheckLinkageResponseDto } from './dto/check-linkage.response.dto';
-import { CarerProfleService } from 'src/carer-profle/carer-profle.service';
+import { CaredProfileService } from 'src/cared-profile/cared-profile.service';
 import { CreateCaredProfileWithUserDto } from './dto/create-cared-senior-citizen-with-user.dto';
 
 @Injectable()
@@ -12,11 +12,11 @@ export class CaredSeniorCitizenService {
   constructor(
     @InjectRepository(CaredSeniorCitizen)
     private readonly caredSeniorCitizenRepository: Repository<CaredSeniorCitizen>,
-    private readonly carerProfileService: CarerProfleService,
+    private readonly caredProfileService: CaredProfileService,
   ) {}
   async create(createCaredSeniorCitizenDto: CreateCaredSeniorCitizenDto) {
     const entity = this.caredSeniorCitizenRepository.create({
-      carerProfile: { id: createCaredSeniorCitizenDto.carerProfileId },
+      caredProfile: { id: createCaredSeniorCitizenDto.caredProfileId },
       seniorCitizenProfile: {
         id: createCaredSeniorCitizenDto.seniorCitizenProfileId,
       },
@@ -27,11 +27,11 @@ export class CaredSeniorCitizenService {
   async createByUserId(
     createCaredProfileWithUserDto: CreateCaredProfileWithUserDto,
   ) {
-    const carerProfile = await this.carerProfileService.findByUserId(
+    const caredProfile = await this.caredProfileService.findByUserId(
       createCaredProfileWithUserDto.userId,
     );
     const entity = this.caredSeniorCitizenRepository.create({
-      carerProfile: { id: carerProfile.id },
+      caredProfile: { id: caredProfile.id },
       seniorCitizenProfile: {
         id: createCaredProfileWithUserDto.seniorCitizenProfileId,
       },
@@ -77,7 +77,7 @@ export class CaredSeniorCitizenService {
   //for return seniors profile by cared profile
   async getAllByCaredProfileId(caredProfileId: number) {
     return this.caredSeniorCitizenRepository.findBy({
-      carerProfile: {
+      caredProfile: {
         id: caredProfileId,
       },
     });

@@ -9,7 +9,9 @@ describe('SeniorCitizenProfileService', () => {
       providers: [SeniorCitizenProfileService],
     }).compile();
 
-    service = module.get<SeniorCitizenProfileService>(SeniorCitizenProfileService);
+    service = module.get<SeniorCitizenProfileService>(
+      SeniorCitizenProfileService,
+    );
   });
 
   it('should be defined', () => {

@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CarerProfleModule } from './carer-profle/carer-profle.module';
-import { CarerProfle } from './carer-profle/entities/carer-profle.entity';
 import { SeniorCitizenProfileModule } from './senior-citizen-profile/senior-citizen-profile.module';
 import { SeniorCitizenProfile } from './senior-citizen-profile/entities/senior-citizen-profile.entity';
 import { CaredSeniorCitizenModule } from './cared-senior-citizen/cared-senior-citizen.module';
@@ -21,6 +19,8 @@ import { VitalSign } from './vital-signs/entities/vital-sign.entity';
 import { DeviceRoomModule } from './device-room/device-room.module';
 import { VitalSignsSummaryModule } from './vital-signs-summary/vital-signs-summary.module';
 import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-summary.entity';
+import { CaredProfileModule } from './cared-profile/cared-profile.module';
+import { CaredProfile } from './cared-profile/entities/cared-profile.entity';
 
 @Module({
   imports: [
@@ -37,7 +37,7 @@ import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-su
         database: configService.get<string>('DB_NAME'),
         synchronize: true,
         entities: [
-          CarerProfle,
+          CaredProfile,
           SeniorCitizenProfile,
           CaredSeniorCitizen,
           Device,
@@ -47,7 +47,7 @@ import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-su
         ],
       }),
     }),
-    CarerProfleModule,
+    CaredProfileModule,
     SeniorCitizenProfileModule,
     CaredSeniorCitizenModule,
     SupabaseModule,
@@ -60,6 +60,7 @@ import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-su
     VitalSignsModule,
     DeviceRoomModule,
     VitalSignsSummaryModule,
+    CaredProfileModule,
   ],
   providers: [
     {

@@ -1,18 +1,18 @@
 import { ConflictException, Injectable } from '@nestjs/common';
-import { CreateCarerProfleDto } from './dto/create-carer-profle.dto';
-import { UpdateCarerProfleDto } from './dto/update-carer-profle.dto';
+import { CreateCaredProfileDto } from './dto/create-cared-profile.dto';
+import { UpdateCaredProfileDto } from './dto/update-cared-profile.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { CarerProfle } from './entities/carer-profle.entity';
+import { CaredProfile } from './entities/cared-profile.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
-export class CarerProfleService {
+export class CaredProfileService {
   constructor(
-    @InjectRepository(CarerProfle)
-    private readonly caredProfileRepository: Repository<CarerProfle>,
+    @InjectRepository(CaredProfile)
+    private readonly caredProfileRepository: Repository<CaredProfile>,
   ) {}
-  async create(createCarerProfleDto: CreateCarerProfleDto) {
-    const entity = this.caredProfileRepository.create(createCarerProfleDto);
+  async create(createCaredProfileDto: CreateCaredProfileDto) {
+    const entity = this.caredProfileRepository.create(createCaredProfileDto);
     return await this.caredProfileRepository.save(entity);
   }
 
@@ -31,19 +31,19 @@ export class CarerProfleService {
     });
   }
 
-  async update(id: number, updateCarerProfleDto: UpdateCarerProfleDto) {
+  async update(id: number, updateCaredProfileDto: UpdateCaredProfileDto) {
     const caredProfile = await this.findOne(id);
     if (
-      updateCarerProfleDto.name &&
-      updateCarerProfleDto.name !== caredProfile.name
+      updateCaredProfileDto.name &&
+      updateCaredProfileDto.name !== caredProfile.name
     ) {
-      caredProfile.name = updateCarerProfleDto.name;
+      caredProfile.name = updateCaredProfileDto.name;
     }
     if (
-      updateCarerProfleDto.lastname &&
-      updateCarerProfleDto.lastname !== caredProfile.lastname
+      updateCaredProfileDto.lastname &&
+      updateCaredProfileDto.lastname !== caredProfile.lastname
     ) {
-      caredProfile.lastname = updateCarerProfleDto.lastname;
+      caredProfile.lastname = updateCaredProfileDto.lastname;
     }
     return await this.caredProfileRepository.save(caredProfile);
   }

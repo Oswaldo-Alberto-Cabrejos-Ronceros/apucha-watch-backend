@@ -19,7 +19,8 @@ export class HealthCondition {
 
   @OneToMany(
     () => HealthConditionRecommendation,
-    (healthConditionRecommendation) => healthConditionRecommendation.healthCondition,
+    (healthConditionRecommendation) =>
+      healthConditionRecommendation.healthCondition,
   )
   healthConditionRecommendations: HealthConditionRecommendation[];
 

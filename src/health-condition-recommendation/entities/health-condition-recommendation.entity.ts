@@ -15,11 +15,18 @@ export class HealthConditionRecommendation {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => HealthCondition, (healthCondition) => healthCondition.healthConditionRecommendations)
+  @ManyToOne(
+    () => HealthCondition,
+    (healthCondition) => healthCondition.healthConditionRecommendations,
+  )
   @JoinColumn({ name: 'health_condition_id' })
   healthCondition: HealthCondition;
 
-  @ManyToOne(() => HealthRecommendation, (healthRecommendation) => healthRecommendation.healthConditionRecommendations)
+  @ManyToOne(
+    () => HealthRecommendation,
+    (healthRecommendation) =>
+      healthRecommendation.healthConditionRecommendations,
+  )
   @JoinColumn({ name: 'health_recommendation_id' })
   healthRecommendation: HealthRecommendation;
 

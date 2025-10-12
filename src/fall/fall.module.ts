@@ -4,9 +4,8 @@ import { FallController } from './fall.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { FallEvent } from './entities/fall.entity';
 
-
 @Module({
-  import: [TypeOrmModule.forFeature([FallEvent])],
+  imports: [TypeOrmModule.forFeature([FallEvent])],
   controllers: [FallController],
   providers: [FallService],
 })

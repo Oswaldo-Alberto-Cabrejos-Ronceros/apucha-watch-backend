@@ -14,8 +14,8 @@ export class HealthConditionRecommendationService {
 
   async create(createDto: CreateHealthConditionRecommendationDto) {
     const entity = this.repo.create({
-      healthCondition: { id: createDto.healthConditionId } as any,
-      healthRecommendation: { id: createDto.healthRecommendationId } as any,
+      healthCondition: { id: createDto.healthConditionId },
+      healthRecommendation: { id: createDto.healthRecommendationId },
     });
     return await this.repo.save(entity);
   }
@@ -37,10 +37,10 @@ export class HealthConditionRecommendationService {
     const entity = await this.findOne(id);
 
     if (updateDto.healthConditionId) {
-      entity.healthCondition = { id: updateDto.healthConditionId } as any;
+      entity.healthCondition.id = updateDto.healthConditionId;
     }
     if (updateDto.healthRecommendationId) {
-      entity.healthRecommendation = { id: updateDto.healthRecommendationId } as any;
+      entity.healthRecommendation.id = updateDto.healthRecommendationId;
     }
 
     return await this.repo.save(entity);

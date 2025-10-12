@@ -1,8 +1,8 @@
 export class CreateFallDto {
   userId: string;
   timestamp: Date;
-  location?: {
+  /*  location?: {
     lat: number;
     lon: number;
-  };
+  };*/
 }

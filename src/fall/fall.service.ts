@@ -2,19 +2,27 @@ import { Injectable } from '@nestjs/common';
 import { CreateFallDto } from './dto/create-fall.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { FallEvent } from './entities/fall.entity';
 
 @Injectable()
 export class FallService {
-
-  private fallEvents: CreateFallDto[] = [];
+  constructor(
+    @InjectRepository(FallEvent)
+    private readonly fallRespository: Repository<FallEvent>,
+  ) {}
 
   registerFallEvent(event: CreateFallDto) {
-    this.fallEvents.push(event);
-    return { message: 'Caída registrada', event };
+    const entity = this.fallRespository.create(event);
+    return this.fallRespository.save(entity);
   }
 
-  getFallHistory(userId: string) {
-    return this.fallEvents.filter(e => e.userId === userId);
+  getFallHistory(seniorCitizenId: number) {
+    return this.fallRespository.find({
+      where: {
+        seniorCitizen: {
+          id: seniorCitizenId,
+        },
+      },
+    });
   }
 }
-

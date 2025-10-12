@@ -59,4 +59,12 @@ export class CaredSeniorCitizenController {
       caredProfileId,
     );
   }
+
+  @Get('user/:userId')
+  getAllByUserId(
+    @Param('userId')
+    userId: string,
+  ) {
+    return this.caredSeniorCitizenService.getAllByUserId(userId);
+  }
 }

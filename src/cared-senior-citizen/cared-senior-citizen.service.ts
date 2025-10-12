@@ -82,4 +82,15 @@ export class CaredSeniorCitizenService {
       },
     });
   }
+
+  //for return seniors profile by user id
+  async getAllByUserId(userId: string) {
+    return this.caredSeniorCitizenRepository.find({
+      where: {
+        caredProfile: {
+          userId: userId,
+        },
+      },
+    });
+  }
 }

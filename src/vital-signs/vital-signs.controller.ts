@@ -11,6 +11,7 @@ import { VitalSignService } from './vital-signs.service';
 import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { UpdateVitalSignDto } from './dto/update-vital-sign.dto';
 import { VitalSignsGateway } from './vital-signs.gateway';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
 
 @Controller('vital-signs')
 export class VitalSignController {
@@ -19,6 +20,7 @@ export class VitalSignController {
     private readonly vitalSignsGateway: VitalSignsGateway,
   ) {}
 
+  @IsPublic()
   @Post()
   create(@Body() createVitalSignDto: CreateVitalSignDto) {
     //emit for websocket

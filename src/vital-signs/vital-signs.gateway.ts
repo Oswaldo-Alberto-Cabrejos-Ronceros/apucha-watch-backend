@@ -18,10 +18,10 @@ export class VitalSignsGateway {
 
   @SubscribeMessage('subscribe')
   handleSubscribe(
-    @MessageBody() data: { deviceId: string },
+    @MessageBody() data: { deviceCode: string },
     @ConnectedSocket() client: Socket,
   ) {
-    return this.deviceRoomDevice.subscribeToDevice(client, data.deviceId);
+    return this.deviceRoomDevice.subscribeToDevice(client, data.deviceCode);
   }
 
   sendVitalSigns(data: CreateVitalSignDto) {

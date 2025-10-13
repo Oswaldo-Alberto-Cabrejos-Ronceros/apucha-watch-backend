@@ -24,8 +24,9 @@ export class SeniorCitizenProfileService {
   }
 
   async findOne(id: number) {
-    return await this.seniorCitizenProfileRepository.findOneByOrFail({
-      id: id,
+    return await this.seniorCitizenProfileRepository.findOneOrFail({
+      where: { id: id },
+      relations: { device: true },
     });
   }
 

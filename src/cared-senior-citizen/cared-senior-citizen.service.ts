@@ -76,9 +76,15 @@ export class CaredSeniorCitizenService {
 
   //for return seniors profile by cared profile
   async getAllByCaredProfileId(caredProfileId: number) {
-    return this.caredSeniorCitizenRepository.findBy({
-      caredProfile: {
-        id: caredProfileId,
+    return this.caredSeniorCitizenRepository.find({
+      where: {
+        caredProfile: {
+          id: caredProfileId,
+        },
+      },
+      relations: {
+        caredProfile: true,
+        seniorCitizenProfile: true,
       },
     });
   }
@@ -90,6 +96,10 @@ export class CaredSeniorCitizenService {
         caredProfile: {
           userId: userId,
         },
+      },
+      relations: {
+        caredProfile: true,
+        seniorCitizenProfile: true,
       },
     });
   }

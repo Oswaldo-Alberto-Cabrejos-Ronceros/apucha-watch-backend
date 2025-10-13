@@ -21,6 +21,12 @@ import { VitalSignsSummaryModule } from './vital-signs-summary/vital-signs-summa
 import { VitalSignsSummary } from './vital-signs-summary/entities/vital-signs-summary.entity';
 import { CaredProfileModule } from './cared-profile/cared-profile.module';
 import { CaredProfile } from './cared-profile/entities/cared-profile.entity';
+import { HealthConditionModule } from './health-condition/health-condition.module';
+import { HealthRecommendationModule } from './health-recommendation/health-recommendation.module';
+import { HealthConditionRecommendationModule } from './health-condition-recommendation/health-condition-recommendation.module';
+import { HealthRecommendation } from './health-recommendation/entities/health-recommendation.entity';
+import { HealthCondition } from './health-condition/entities/health-condition.entity';
+import { HealthConditionRecommendation } from './health-condition-recommendation/entities/health-condition-recommendation.entity';
 
 @Module({
   imports: [
@@ -44,6 +50,9 @@ import { CaredProfile } from './cared-profile/entities/cared-profile.entity';
           Ubication,
           VitalSign,
           VitalSignsSummary,
+          HealthCondition,
+          HealthRecommendation,
+          HealthConditionRecommendation,
         ],
       }),
     }),
@@ -53,14 +62,15 @@ import { CaredProfile } from './cared-profile/entities/cared-profile.entity';
     SupabaseModule,
     AuthModule,
     DeviceModule,
-
     FallModule,
-
     UbicationModule,
     VitalSignsModule,
     DeviceRoomModule,
     VitalSignsSummaryModule,
     CaredProfileModule,
+    HealthConditionModule,
+    HealthRecommendationModule,
+    HealthConditionRecommendationModule,
   ],
   providers: [
     {

@@ -11,13 +11,17 @@ export class FallService {
     private readonly fallRespository: Repository<FallEvent>,
   ) {}
 
-  registerFallEvent(event: CreateFallDto) {
-    const entity = this.fallRespository.create(event);
-    return this.fallRespository.save(entity);
+  async registerFallEvent(dto: CreateFallDto) {
+    const withDate = {
+      deviceCode: dto.deviceCode,
+      timestamp: new Date(),
+    };
+    const entity = this.fallRespository.create(withDate);
+    return await this.fallRespository.save(entity);
   }
 
-  getFallHistory(seniorCitizenId: number) {
-    return this.fallRespository.find({
+  async getFallHistory(seniorCitizenId: number) {
+    return await this.fallRespository.find({
       where: {
         seniorCitizen: {
           id: seniorCitizenId,

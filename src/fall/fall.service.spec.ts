@@ -9,9 +9,8 @@ export class FallController {
   registrarCaida(
     @Body()
     body: {
-      userId: string;
+      deviceCode: string;
       timestamp: Date;
-      location?: { lat: number; lon: number };
     },
   ) {
     return this.fallService.registerFallEvent(body);

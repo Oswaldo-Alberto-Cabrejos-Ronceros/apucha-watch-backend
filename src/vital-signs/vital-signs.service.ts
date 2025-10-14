@@ -13,7 +13,13 @@ export class VitalSignService {
   ) {}
 
   async create(createVitalSignDto: CreateVitalSignDto): Promise<VitalSign> {
-    const vitalSign = this.vitalSignRepository.create(createVitalSignDto);
+    const withDate = {
+      deviceCode: createVitalSignDto.deviceCode,
+      timeStamp: new Date(),
+      heartRate: createVitalSignDto.heartRate,
+      oxygenSaturation: createVitalSignDto.oxygenSaturation,
+    };
+    const vitalSign = this.vitalSignRepository.create(withDate);
     return this.vitalSignRepository.save(vitalSign);
   }
 

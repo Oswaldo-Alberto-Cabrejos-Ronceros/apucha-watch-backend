@@ -8,11 +8,13 @@ import {
 } from '@nestjs/common';
 import { FallService } from './fall.service';
 import { CreateFallDto } from './dto/create-fall.dto';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
 
 @Controller('fall')
 export class FallController {
   constructor(private readonly fallService: FallService) {}
 
+  @IsPublic()
   @Post()
   registrarCaida(@Body() createFallDto: CreateFallDto) {
     return this.fallService.registerFallEvent(createFallDto);

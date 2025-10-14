@@ -18,6 +18,12 @@ async function bootstrap() {
     new AuthenticationSocketIoAdapter(app, socketAuthMiddleware),
   );
 
+  app.enableCors({
+    origin: '*', // Permite TODOS los orígenes (solo para TESTING)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+  });
+
   //apply middleware
   //interceptors and pipes globals
   app.useGlobalInterceptors(new TypeORMNotFoundInterceptor());

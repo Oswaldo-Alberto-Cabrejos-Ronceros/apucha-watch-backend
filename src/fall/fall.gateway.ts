@@ -8,7 +8,10 @@ import {
 import { Server, Socket } from 'socket.io';
 import { CreateFallDto } from './dto/create-fall.dto';
 import { DeviceRoomService } from 'src/device-room/device-room.service';
-@WebSocketGateway({ cors: { origin: '*' }, transports: ['websocket'] })
+@WebSocketGateway({
+  cors: { origin: '*', methods: ['GET', 'POST'], credentials: true },
+  transports: ['websocket'],
+})
 export class FallGateway {
   @WebSocketServer() server: Server;
   constructor(private readonly deviceRoomDevice: DeviceRoomService) {}

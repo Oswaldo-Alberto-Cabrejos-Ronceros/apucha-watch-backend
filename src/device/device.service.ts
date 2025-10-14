@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Device } from './entities/device.entity';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
-import { Device } from './entities/device.entity';
-import { Repository } from 'typeorm';
-import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class DeviceService {
@@ -12,24 +12,41 @@ export class DeviceService {
     private readonly deviceRepository: Repository<Device>,
   ) {}
 
-  async create(createDeviceDto: CreateDeviceDto) {
-    const entity = this.deviceRepository.create(createDeviceDto);
-    return await this.deviceRepository.save(entity);
+  async create(createDeviceDto: CreateDeviceDto): Promise<Device> {
+    const device = this.deviceRepository.create(createDeviceDto);
+    return await this.deviceRepository.save(device);
   }
 
-  findAll() {
-    return `This action returns all device`;
+  async findAll(): Promise<Device[]> {
+    return await this.deviceRepository.find({
+      relations: ['ubications', 'vitalSigns'],
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} device`;
+  async findOne(id: number): Promise<Device> {
+    const device = await this.deviceRepository.findOne({
+      where: { id },
+      relations: ['ubications', 'vitalSigns'],
+    });
+    if (!device) {
+      throw new NotFoundException(`Device con id ${id} no encontrado`);
+    }
+    return device;
   }
 
-  update(id: number, updateDeviceDto: UpdateDeviceDto) {
-    return `This action updates a #${id} device`;
+  async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
+    const device = await this.findOne(id);
+    Object.assign(device, updateDeviceDto);
+    return await this.deviceRepository.save(device);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} device`;
+  async remove(id: number): Promise<void> {
+    const device = await this.findOne(id);
+    await this.deviceRepository.softRemove(device);
+  }
+
+  async restore(id: number): Promise<Device> {
+    await this.deviceRepository.restore(id);
+    return this.findOne(id);
   }
 }

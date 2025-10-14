@@ -15,6 +15,7 @@ export class AuthController {
   @IsPublic()
   @Post('signup')
   register(@Body() registerRequest: RegisterRequestDto) {
+    console.log(registerRequest);
     return this.authService.signUp(registerRequest);
   }
 }

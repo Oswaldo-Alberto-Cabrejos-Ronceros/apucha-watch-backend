@@ -1,7 +1,9 @@
 import { Type } from 'class-transformer';
 import {
   IsDate,
+  IsInt,
   IsNotEmpty,
+  IsPositive,
   MaxDate,
   MaxLength,
   MinDate,
@@ -23,4 +25,8 @@ export class CreateSeniorCitizenProfileDto {
     message: 'Como máximo debe tener 120 años',
   })
   birthdate: Date;
+  @Type(() => Number)
+  @IsInt()
+  @IsPositive()
+  deviceId: number;
 }

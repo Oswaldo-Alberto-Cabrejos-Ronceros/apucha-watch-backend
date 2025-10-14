@@ -6,13 +6,18 @@ export class FallController {
   constructor(private readonly fallService: FallService) {}
 
   @Post('register')
-  registrarCaida(@Body() body: { userId: string; timestamp: Date; location?: { lat: number; lon: number } }) {
+  registrarCaida(
+    @Body()
+    body: {
+      deviceCode: string;
+      timestamp: Date;
+    },
+  ) {
     return this.fallService.registerFallEvent(body);
   }
 
   @Get(':userId')
-  historial(@Param('userId') userId: string) {
+  historial(@Param('userId') userId: number) {
     return this.fallService.getFallHistory(userId);
   }
 }
-

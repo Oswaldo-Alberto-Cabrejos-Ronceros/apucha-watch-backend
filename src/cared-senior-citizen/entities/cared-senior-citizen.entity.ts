@@ -1,4 +1,5 @@
-import { CarerProfle } from 'src/carer-profle/entities/carer-profle.entity';
+import { CaredProfile } from 'src/cared-profile/entities/cared-profile.entity';
+import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
 import {
   CreateDateColumn,
   Entity,
@@ -9,16 +10,16 @@ import {
 } from 'typeorm';
 
 @Entity({ name: 'cared_senior_citizens' })
-@Unique(['carerProfile', 'seniorCitizenProfile'])
+@Unique(['caredProfile', 'seniorCitizenProfile'])
 export class CaredSeniorCitizen {
   @PrimaryGeneratedColumn()
   id: number;
-  @ManyToOne(() => CarerProfle)
-  @JoinColumn({ name: 'carer_profile_id' })
-  carerProfile: CarerProfle;
+  @ManyToOne(() => CaredProfile)
+  @JoinColumn({ name: 'cared_profile_id' })
+  caredProfile: CaredProfile;
   @JoinColumn({ name: 'senior_citizen_profile_id' })
-  @ManyToOne(() => CarerProfle)
-  seniorCitizenProfile: CarerProfle;
+  @ManyToOne(() => SeniorCitizenProfile)
+  seniorCitizenProfile: SeniorCitizenProfile;
   @CreateDateColumn()
   createAt: Date;
 }

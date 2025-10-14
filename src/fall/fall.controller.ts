@@ -1,18 +1,27 @@
-import { Controller, Post, Body, Get, Param } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  Get,
+  Param,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { FallService } from './fall.service';
 import { CreateFallDto } from './dto/create-fall.dto';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
 
 @Controller('fall')
 export class FallController {
   constructor(private readonly fallService: FallService) {}
 
-  @Post('register')
-  registrarCaida(@Body() body: CreateFallDto) {
-    return this.fallService.registerFallEvent(body);
+  @IsPublic()
+  @Post()
+  registrarCaida(@Body() createFallDto: CreateFallDto) {
+    return this.fallService.registerFallEvent(createFallDto);
   }
 
-  @Get(':userId')
-  historial(@Param('userId') userId: string) {
-    return this.fallService.getFallHistory(userId);
+  @Get(':seniorCitizenId')
+  historial(@Param('seniorCitizenId', ParseIntPipe) seniorCitizenId: number) {
+    return this.fallService.getFallHistory(seniorCitizenId);
   }
 }

@@ -1,7 +1,6 @@
-import { IsNotEmpty, IsUUID } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
 
 export class CreateDeviceDto {
   @IsNotEmpty()
-  @IsUUID()
   code: string;
 }

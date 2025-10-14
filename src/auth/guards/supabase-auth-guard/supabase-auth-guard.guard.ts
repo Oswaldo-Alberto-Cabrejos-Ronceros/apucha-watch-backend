@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { SupabaseClient } from '@supabase/supabase-js';
-import { CarerProfleService } from 'src/carer-profle/carer-profle.service';
+import { CaredProfileService } from 'src/cared-profile/cared-profile.service';
 import { AuthenticationRequest } from 'src/common/models/authentication-request.model';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class SupabaseAuthGuardGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     @Inject('SUPABASE_CLIENT') private readonly supabaseClient: SupabaseClient,
-    private readonly carerProfleService: CarerProfleService,
+    private readonly caredProfileService: CaredProfileService,
   ) {}
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride<boolean>('isPublic', [
@@ -40,14 +40,14 @@ export class SupabaseAuthGuardGuard implements CanActivate {
     }
 
     //obtenemos rol
-    const carerProfile = await this.carerProfleService.findByUserId(
+    const caredProfile = await this.caredProfileService.findByUserId(
       data.user.id,
     );
-    if (!carerProfile) {
+    if (!caredProfile) {
       throw new UnauthorizedException('No rol provided');
     }
     req.user = data.user;
-    req.user.role = carerProfile.userType;
+    req.user.role = caredProfile.userType;
     return true;
   }
 }

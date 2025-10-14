@@ -1,15 +1,15 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { SupabaseClient } from '@supabase/supabase-js';
 import { AuthRequestDto } from './dto/auth-request.dto';
-import { CreateCarerProfleDto } from 'src/carer-profle/dto/create-carer-profle.dto';
-import { CarerProfleService } from 'src/carer-profle/carer-profle.service';
+import { CreateCaredProfileDto } from 'src/cared-profile/dto/create-cared-profile.dto';
+import { CaredProfileService } from 'src/cared-profile/cared-profile.service';
 import { RegisterRequestDto } from './dto/register-request.dto';
 
 @Injectable()
 export class AuthService {
   constructor(
     @Inject('SUPABASE_CLIENT') private readonly supabaseClient: SupabaseClient,
-    private readonly carerProfileService: CarerProfleService,
+    private readonly caredProfileService: CaredProfileService,
   ) {}
   async signUp(registerRequest: RegisterRequestDto) {
     const { data, error } = await this.supabaseClient.auth.signUp({
@@ -23,17 +23,17 @@ export class AuthService {
       throw new Error('User not created');
     }
     try {
-      //parsed to create-carer-profile dto
-      const createCarerProfileDto: CreateCarerProfleDto = {
+      //parsed to create-cared-profile dto
+      const createCaredProfileDto: CreateCaredProfileDto = {
         name: registerRequest.name,
         lastname: registerRequest.lastname,
         userId: data.user.id,
       };
       //save profle
-      const carerProfile = await this.carerProfileService.create(
-        createCarerProfileDto,
+      const caredProfile = await this.caredProfileService.create(
+        createCaredProfileDto,
       );
-      data.user.role = carerProfile.userType;
+      data.user.role = caredProfile.userType;
       return data;
     } catch (e) {
       //if error delete user
@@ -53,10 +53,10 @@ export class AuthService {
     if (!data.user) {
       throw new Error('User not found');
     }
-    const carerProfile = await this.carerProfileService.findByUserId(
+    const caredProfile = await this.caredProfileService.findByUserId(
       data.user.id,
     );
-    data.user.role = carerProfile.userType;
+    data.user.role = caredProfile.userType;
     return data;
   }
   async getUser(token: string) {

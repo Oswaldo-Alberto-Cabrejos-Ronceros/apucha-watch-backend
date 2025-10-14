@@ -15,7 +15,8 @@ export class AuthenticationSocketIoAdapter extends IoAdapter {
   override createIOServer(port: number, options?: ServerOptions): Server {
     const server = super.createIOServer(port, {
       ...options,
-      cors: { origin: '*' },
+      cors: { origin: '*', credentials: true },
+      transports: ['websocket'],
     }) as Server;
     server.use((socket: Socket, next) => {
       void this.authMiddleware.use(socket, next);

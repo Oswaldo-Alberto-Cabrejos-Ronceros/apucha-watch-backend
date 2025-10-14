@@ -10,7 +10,7 @@ import { VitalSignsSendDto } from './dto/vital-signs-send.dto';
 import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { DeviceRoomService } from 'src/device-room/device-room.service';
 
-@WebSocketGateway({ cors: { origin: '*' } })
+@WebSocketGateway({ cors: { origin: '*' }, transports: ['websocket'] })
 export class VitalSignsGateway {
   @WebSocketServer() server: Server;
 

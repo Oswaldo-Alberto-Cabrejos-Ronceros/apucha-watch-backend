@@ -28,6 +28,8 @@ import { HealthRecommendation } from './health-recommendation/entities/health-re
 import { HealthCondition } from './health-condition/entities/health-condition.entity';
 import { HealthConditionRecommendation } from './health-condition-recommendation/entities/health-condition-recommendation.entity';
 import { FallEvent } from './fall/entities/fall.entity';
+import { FirebaseAdminModule } from './firebase-admin/firebase-admin.module';
+import { NotificationsModule } from './notifications/notifications.module';
 
 @Module({
   imports: [
@@ -73,6 +75,8 @@ import { FallEvent } from './fall/entities/fall.entity';
     HealthConditionModule,
     HealthRecommendationModule,
     HealthConditionRecommendationModule,
+    FirebaseAdminModule,
+    NotificationsModule,
   ],
   providers: [
     {

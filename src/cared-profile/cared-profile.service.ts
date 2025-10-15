@@ -4,6 +4,7 @@ import { UpdateCaredProfileDto } from './dto/update-cared-profile.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CaredProfile } from './entities/cared-profile.entity';
 import { Repository } from 'typeorm';
+import { AssignTokenDeviceRequest } from './dto/assign-token-device-request.dto';
 
 @Injectable()
 export class CaredProfileService {
@@ -29,6 +30,12 @@ export class CaredProfileService {
     return await this.caredProfileRepository.findOneByOrFail({
       userId: userId,
     });
+  }
+
+  async assignTokenDevice(assignTokenDeviceRequest: AssignTokenDeviceRequest) {
+    const user = await this.findByUserId(assignTokenDeviceRequest.userId);
+    user.deviceToken = assignTokenDeviceRequest.deviceToken;
+    return this.caredProfileRepository.save(user);
   }
 
   async update(id: number, updateCaredProfileDto: UpdateCaredProfileDto) {

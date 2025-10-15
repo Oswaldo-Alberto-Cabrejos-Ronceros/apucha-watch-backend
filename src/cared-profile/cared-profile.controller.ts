@@ -11,6 +11,7 @@ import {
 import { CaredProfileService } from './cared-profile.service';
 import { CreateCaredProfileDto } from './dto/create-cared-profile.dto';
 import { UpdateCaredProfileDto } from './dto/update-cared-profile.dto';
+import { AssignTokenDeviceRequest } from './dto/assign-token-device-request.dto';
 
 @Controller('cared-profile')
 export class CaredProfileController {
@@ -34,6 +35,13 @@ export class CaredProfileController {
   @Get('by-user/:userId')
   findByUserId(@Param('userId') userId: string) {
     return this.caredProfileService.findByUserId(userId);
+  }
+
+  @Post('assign-token-device')
+  assignTokenDevice(
+    @Body() assignTokenDeviceRequest: AssignTokenDeviceRequest,
+  ) {
+    return this.caredProfileService.assignTokenDevice(assignTokenDeviceRequest);
   }
 
   @Patch(':id')

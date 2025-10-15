@@ -21,6 +21,8 @@ export class CaredProfile {
   lastname: string;
   @Column({ type: 'enum', enum: UserType, default: UserType.GENERAL })
   userType: UserType;
+  @Column({ nullable: true })
+  deviceToken: string;
   @CreateDateColumn()
   createAt: Date;
   @UpdateDateColumn()

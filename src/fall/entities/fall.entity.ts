@@ -4,12 +4,12 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { CaredSeniorCitizen } from 'src/cared-senior-citizen/entities/cared-senior-citizen.entity';
 import { Device } from 'src/device/entities/device.entity';
+import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
 
 @Entity()
 export class FallEvent {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn()
   id: string;
 
   @CreateDateColumn()
@@ -21,8 +21,8 @@ export class FallEvent {
   @Column({ type: 'float', nullable: true })
   lon: number;*/
 
-  @ManyToOne(() => CaredSeniorCitizen, (senior) => senior.id)
-  seniorCitizen: CaredSeniorCitizen;
+  @ManyToOne(() => SeniorCitizenProfile, (senior) => senior.id)
+  seniorCitizen: SeniorCitizenProfile;
 
   @ManyToOne(() => Device, (device) => device.id)
   device: Device;

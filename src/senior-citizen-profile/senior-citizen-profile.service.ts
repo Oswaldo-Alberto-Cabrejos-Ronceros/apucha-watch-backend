@@ -30,6 +30,16 @@ export class SeniorCitizenProfileService {
     });
   }
 
+  async findOneByDeviceCode(deviceCode: string) {
+    return await this.seniorCitizenProfileRepository.findOneOrFail({
+      where: {
+        device: {
+          code: deviceCode,
+        },
+      },
+    });
+  }
+
   async update(
     id: number,
     updateSeniorCitizenProfileDto: UpdateSeniorCitizenProfileDto,

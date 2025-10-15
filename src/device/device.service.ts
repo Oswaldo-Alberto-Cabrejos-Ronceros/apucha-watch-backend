@@ -34,6 +34,14 @@ export class DeviceService {
     return device;
   }
 
+  async findOneByCode(deviceCode: string) {
+    return await this.deviceRepository.findOneOrFail({
+      where: {
+        code: deviceCode,
+      },
+    });
+  }
+
   async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
     const device = await this.findOne(id);
     Object.assign(device, updateDeviceDto);

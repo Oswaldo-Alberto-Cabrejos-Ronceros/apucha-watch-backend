@@ -27,6 +27,7 @@ import { HealthConditionRecommendationModule } from './health-condition-recommen
 import { HealthRecommendation } from './health-recommendation/entities/health-recommendation.entity';
 import { HealthCondition } from './health-condition/entities/health-condition.entity';
 import { HealthConditionRecommendation } from './health-condition-recommendation/entities/health-condition-recommendation.entity';
+import { FallEvent } from './fall/entities/fall.entity';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { HealthConditionRecommendation } from './health-condition-recommendation
           SeniorCitizenProfile,
           CaredSeniorCitizen,
           Device,
+          FallEvent,
           Ubication,
           VitalSign,
           VitalSignsSummary,

@@ -8,5 +8,6 @@ import { SeniorCitizenProfile } from './entities/senior-citizen-profile.entity';
   imports: [TypeOrmModule.forFeature([SeniorCitizenProfile])],
   controllers: [SeniorCitizenProfileController],
   providers: [SeniorCitizenProfileService],
+  exports: [SeniorCitizenProfileService],
 })
 export class SeniorCitizenProfileModule {}

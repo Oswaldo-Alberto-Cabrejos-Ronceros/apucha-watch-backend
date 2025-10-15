@@ -103,4 +103,18 @@ export class CaredSeniorCitizenService {
       },
     });
   }
+
+  //for return by seniorCitizenProfile
+  async getAllBySeniorCitizenProfileId(seniorCitizenProfileId: number) {
+    return this.caredSeniorCitizenRepository.find({
+      where: {
+        seniorCitizenProfile: {
+          id: seniorCitizenProfileId,
+        },
+      },
+      relations: {
+        caredProfile: true,
+      },
+    });
+  }
 }

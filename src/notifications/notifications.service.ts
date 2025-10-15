@@ -1,5 +1,7 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { getMessaging } from 'firebase-admin/messaging';
+
 @Injectable()
 export class NotificationsService {
   private readonly logger = new Logger(NotificationsService.name);
@@ -13,7 +15,8 @@ export class NotificationsService {
       token: token,
     };
     try {
-      await this.firebaseApp.messaging().send(message);
+      await getMessaging(this.firebaseApp).send(message);
+      console.log('Mensaje enviado correctamente', token, title, body);
       return { success: true, body };
     } catch (e) {
       this.logger.error(`Error al enviar notificacion ${e}`);

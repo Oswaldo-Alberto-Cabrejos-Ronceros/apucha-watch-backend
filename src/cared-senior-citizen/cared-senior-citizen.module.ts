@@ -13,5 +13,6 @@ import { CaredProfile } from 'src/cared-profile/entities/cared-profile.entity';
   ],
   controllers: [CaredSeniorCitizenController],
   providers: [CaredSeniorCitizenService],
+  exports: [CaredSeniorCitizenService],
 })
 export class CaredSeniorCitizenModule {}

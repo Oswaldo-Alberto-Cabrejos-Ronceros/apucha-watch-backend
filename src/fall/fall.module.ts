@@ -9,6 +9,8 @@ import { SeniorCitizenProfileModule } from 'src/senior-citizen-profile/senior-ci
 import { DeviceModule } from 'src/device/device.module';
 import { Device } from 'src/device/entities/device.entity';
 import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
+import { NotificationsModule } from 'src/notifications/notifications.module';
+import { CaredSeniorCitizenModule } from 'src/cared-senior-citizen/cared-senior-citizen.module';
 
 @Module({
   imports: [
@@ -16,6 +18,8 @@ import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior
     DeviceRoomModule,
     SeniorCitizenProfileModule,
     DeviceModule,
+    NotificationsModule,
+    CaredSeniorCitizenModule,
   ],
   controllers: [FallController],
   providers: [FallService, FallGateway],

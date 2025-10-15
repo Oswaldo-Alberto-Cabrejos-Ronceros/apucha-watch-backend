@@ -1,5 +1,6 @@
 import { Global, Module } from '@nestjs/common';
 import * as admin from 'firebase-admin';
+import { initializeApp, cert } from 'firebase-admin/app';
 
 @Global()
 @Module({
@@ -15,7 +16,9 @@ import * as admin from 'firebase-admin';
             'Variable de entorno no encontrado para crear admin de firebase',
           );
         }
-        return admin.credential.cert(serviceAccount);
+        return initializeApp({
+          credential: cert(serviceAccount),
+        });
       },
     },
   ],

@@ -22,7 +22,7 @@ export class CaredProfile {
   @Column({ type: 'enum', enum: UserType, default: UserType.GENERAL })
   userType: UserType;
   @Column({ nullable: true })
-  deviceToken: string;
+  deviceToken?: string;
   @CreateDateColumn()
   createAt: Date;
   @UpdateDateColumn()

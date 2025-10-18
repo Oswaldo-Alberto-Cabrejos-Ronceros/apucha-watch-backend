@@ -2,6 +2,7 @@ import { HealthCondition } from 'src/health-condition/entities/health-condition.
 import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
 import {
   Column,
+  CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -32,6 +33,9 @@ export class SeniorCitizenHealthCondition {
     default: ConditionSeverity.LEVE,
   })
   severity: ConditionSeverity;
+
+  @CreateDateColumn()
+  createAt?: Date;
 
   @UpdateDateColumn()
   updateAt?: Date;

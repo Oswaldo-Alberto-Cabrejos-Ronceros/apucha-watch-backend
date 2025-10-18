@@ -45,7 +45,7 @@ export class FallService {
     //informamos a todo los cuidadores
     for (const relation of relations) {
       const token = relation.caredProfile.deviceToken;
-      if (!token) return;
+      if (!token) continue;
       await this.notificationsService.sendNotification(
         token,
         'Caida detectada',

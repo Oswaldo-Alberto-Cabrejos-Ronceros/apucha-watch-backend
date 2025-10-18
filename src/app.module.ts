@@ -30,6 +30,8 @@ import { HealthConditionRecommendation } from './health-condition-recommendation
 import { FallEvent } from './fall/entities/fall.entity';
 import { FirebaseAdminModule } from './firebase-admin/firebase-admin.module';
 import { NotificationsModule } from './notifications/notifications.module';
+import { SeniorCitizenHealthConditionModule } from './senior-citizen-health-condition/senior-citizen-health-condition.module';
+import { SeniorCitizenHealthCondition } from './senior-citizen-health-condition/entities/senior-citizen-health-condition.entity';
 
 @Module({
   imports: [
@@ -57,6 +59,7 @@ import { NotificationsModule } from './notifications/notifications.module';
           HealthCondition,
           HealthRecommendation,
           HealthConditionRecommendation,
+          SeniorCitizenHealthCondition,
         ],
       }),
     }),
@@ -77,6 +80,7 @@ import { NotificationsModule } from './notifications/notifications.module';
     HealthConditionRecommendationModule,
     FirebaseAdminModule,
     NotificationsModule,
+    SeniorCitizenHealthConditionModule,
   ],
   providers: [
     {

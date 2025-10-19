@@ -33,6 +33,13 @@ export class SeniorCitizenHealthConditionController {
     return this.seniorCitizenHealthConditionService.findAll();
   }
 
+  @Get('senior-citizen/:id')
+  findAllBySeniorCitizenId(@Param('id', ParseIntPipe) id: number) {
+    return this.seniorCitizenHealthConditionService.findAllBySeniorCitizenId(
+      id,
+    );
+  }
+
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.seniorCitizenHealthConditionService.findOne(+id);

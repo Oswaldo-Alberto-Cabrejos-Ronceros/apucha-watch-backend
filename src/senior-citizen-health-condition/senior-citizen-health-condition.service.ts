@@ -30,6 +30,19 @@ export class SeniorCitizenHealthConditionService {
     return await this.seniorCitizenHealthConditionRepository.find();
   }
 
+  async findAllBySeniorCitizenId(seniorCitizenId: number) {
+    return await this.seniorCitizenHealthConditionRepository.find({
+      where: {
+        seniorCitizenProfile: {
+          id: seniorCitizenId,
+        },
+      },
+      relations: {
+        healthCondition: true,
+      },
+    });
+  }
+
   async findOne(id: number) {
     return await this.seniorCitizenHealthConditionRepository.findOneByOrFail({
       id: id,

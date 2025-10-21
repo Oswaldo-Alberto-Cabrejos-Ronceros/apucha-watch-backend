@@ -42,6 +42,15 @@ export class DeviceService {
     });
   }
 
+  async existByCode(deviceCode: string) {
+    const exist = await this.deviceRepository.existsBy({
+      code: deviceCode,
+    });
+    return {
+      exist: exist,
+    };
+  }
+
   async update(id: number, updateDeviceDto: UpdateDeviceDto): Promise<Device> {
     const device = await this.findOne(id);
     Object.assign(device, updateDeviceDto);

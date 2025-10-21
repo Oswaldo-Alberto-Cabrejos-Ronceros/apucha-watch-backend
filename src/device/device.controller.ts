@@ -11,6 +11,7 @@ import {
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { UpdateDeviceDto } from './dto/update-device.dto';
+import { IsPublic } from 'src/common/decorators/is-public.decorator';
 
 @Controller('devices')
 export class DeviceController {
@@ -24,6 +25,12 @@ export class DeviceController {
   @Get()
   findAll() {
     return this.deviceService.findAll();
+  }
+
+  @IsPublic()
+  @Get('/exist-by-code/:code')
+  existByCode(@Param('code') code: string) {
+    return this.deviceService.existByCode(code);
   }
 
   @Get(':id')

@@ -20,7 +20,7 @@ export class SeniorCitizenProfile {
   lastname: string;
   @Column()
   birthdate: Date;
-  @Column({ nullable: true })
+  @Column()
   phone: string;
   @OneToOne(() => Device)
   @JoinColumn({ name: 'device_id' })

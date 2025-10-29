@@ -25,6 +25,8 @@ export class CreateSeniorCitizenProfileDto {
     message: 'Como máximo debe tener 120 años',
   })
   birthdate: Date;
+  @IsNotEmpty()
+  phone: string;
   @Type(() => Number)
   @IsInt()
   @IsPositive()

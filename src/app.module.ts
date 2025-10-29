@@ -32,6 +32,8 @@ import { FirebaseAdminModule } from './firebase-admin/firebase-admin.module';
 import { NotificationsModule } from './notifications/notifications.module';
 import { SeniorCitizenHealthConditionModule } from './senior-citizen-health-condition/senior-citizen-health-condition.module';
 import { SeniorCitizenHealthCondition } from './senior-citizen-health-condition/entities/senior-citizen-health-condition.entity';
+import { VitalSignsAlertModule } from './vital-signs-alert/vital-signs-alert.module';
+import { VitalSignsAlert } from './vital-signs-alert/entities/vital-signs-alert.entity';
 
 @Module({
   imports: [
@@ -60,6 +62,7 @@ import { SeniorCitizenHealthCondition } from './senior-citizen-health-condition/
           HealthRecommendation,
           HealthConditionRecommendation,
           SeniorCitizenHealthCondition,
+          VitalSignsAlert,
         ],
       }),
     }),
@@ -81,6 +84,7 @@ import { SeniorCitizenHealthCondition } from './senior-citizen-health-condition/
     FirebaseAdminModule,
     NotificationsModule,
     SeniorCitizenHealthConditionModule,
+    VitalSignsAlertModule,
   ],
   providers: [
     {

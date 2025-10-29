@@ -1,0 +1,5 @@
+export enum VitalSignAlertType {
+  BRADICARDIA = 'BRADICARDIA',
+  TAQUICARDIA = 'TAQUICARDIA',
+  HIPOXEMIA = 'HIPOXEMIA',
+}

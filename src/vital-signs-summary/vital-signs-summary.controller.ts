@@ -1,15 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Param, Delete, ParseIntPipe } from '@nestjs/common';
 import { VitalSignsSummaryService } from './vital-signs-summary.service';
-import { CreateVitalSignsSummaryDto } from './dto/create-vital-signs-summary.dto';
-import { UpdateVitalSignsSummaryDto } from './dto/update-vital-signs-summary.dto';
+import { ResolutionVitalSigns } from './enums/resolution.enum';
 
 @Controller('vital-signs-summary')
 export class VitalSignsSummaryController {
@@ -17,34 +8,24 @@ export class VitalSignsSummaryController {
     private readonly vitalSignsSummaryService: VitalSignsSummaryService,
   ) {}
 
-  @Post()
-  create(@Body() createVitalSignsSummaryDto: CreateVitalSignsSummaryDto) {
-    return this.vitalSignsSummaryService.create(createVitalSignsSummaryDto);
-  }
-
   @Get()
   findAll() {
     return this.vitalSignsSummaryService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.vitalSignsSummaryService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateVitalSignsSummaryDto: UpdateVitalSignsSummaryDto,
+  @Get(':deviceCode/:resolution')
+  findAllByIdAndResolution(
+    @Param('deviceCode') deviceCode: string,
+    @Param('resolution') resolution: ResolutionVitalSigns,
   ) {
-    return this.vitalSignsSummaryService.update(
-      +id,
-      updateVitalSignsSummaryDto,
+    return this.vitalSignsSummaryService.findAllByIdAndResolution(
+      deviceCode,
+      resolution,
     );
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.vitalSignsSummaryService.remove(+id);
+  remove(@Param('id', ParseIntPipe) id: number) {
+    return this.vitalSignsSummaryService.remove(id);
   }
 }

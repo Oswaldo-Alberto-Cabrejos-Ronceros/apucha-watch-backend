@@ -1,26 +1,33 @@
 import { Injectable } from '@nestjs/common';
-import { CreateVitalSignsSummaryDto } from './dto/create-vital-signs-summary.dto';
-import { UpdateVitalSignsSummaryDto } from './dto/update-vital-signs-summary.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { VitalSignsSummary } from './entities/vital-signs-summary.entity';
+import { Repository } from 'typeorm';
+import { ResolutionVitalSigns } from './enums/resolution.enum';
 
 @Injectable()
 export class VitalSignsSummaryService {
-  create(createVitalSignsSummaryDto: CreateVitalSignsSummaryDto) {
-    return 'This action adds a new vitalSignsSummary';
+  constructor(
+    @InjectRepository(VitalSignsSummary)
+    private readonly vitalSignsRepo: Repository<VitalSignsSummary>,
+  ) {}
+
+  async findAll() {
+    return await this.vitalSignsRepo.find();
   }
 
-  findAll() {
-    return `This action returns all vitalSignsSummary`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} vitalSignsSummary`;
-  }
-
-  update(id: number, updateVitalSignsSummaryDto: UpdateVitalSignsSummaryDto) {
-    return `This action updates a #${id} vitalSignsSummary`;
+  async findAllByIdAndResolution(
+    deviceCode: string,
+    resolution: ResolutionVitalSigns,
+  ) {
+    return await this.vitalSignsRepo.find({
+      where: {
+        deviceCode: deviceCode,
+        resolution: resolution,
+      },
+    });
   }
 
   remove(id: number) {
-    return `This action removes a #${id} vitalSignsSummary`;
+    return this.vitalSignsRepo.delete(id);
   }
 }

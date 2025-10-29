@@ -7,18 +7,18 @@ export class VitalSignsSummary {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'device_code' })
   deviceCode: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', name: 'start_time' })
   startTime: Date;
 
-  @Column()
+  @Column({ name: 'avg_heart_rate' })
   avgHeartRate: number;
 
-  @Column()
+  @Column({ name: 'avg_oxygen_saturation' })
   avgOxygenSaturation: number;
 
-  @Column({ type: 'enum', enum: ResolutionVitalSigns })
+  @Column({ type: 'enum', enum: ResolutionVitalSigns, name: 'resolution' })
   resolution: ResolutionVitalSigns;
 }

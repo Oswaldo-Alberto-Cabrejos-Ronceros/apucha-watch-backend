@@ -12,16 +12,16 @@ export class VitalSign {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ name: 'device_code' })
   deviceCode: string;
 
-  @Column({ type: 'timestamp' })
+  @Column({ type: 'timestamp', name: 'time_stamp' })
   timeStamp: Date;
 
-  @Column('int')
+  @Column('int', { name: 'heart_rate' })
   heartRate: number;
 
-  @Column('int')
+  @Column('int', { name: 'oxygen_saturation' })
   oxygenSaturation: number;
 
   @ManyToOne(() => Device, (device) => device.vitalSigns)

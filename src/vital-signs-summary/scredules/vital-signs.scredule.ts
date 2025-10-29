@@ -11,7 +11,7 @@ export class VitalSignScredule {
   @Cron(CronExpression.EVERY_HOUR)
   async aggregate30s() {
     await this.aggregateAndClean(
-      'vitals-sign',
+      'vital_signs',
       ResolutionVitalSigns.CINCO_MIN,
       '1 hour',
       '30 seconds',
@@ -61,13 +61,13 @@ export class VitalSignScredule {
 
       //insertar promedios
       await queryRunner.query(`
-        INSERT INTO vital_signs_summary (device_code, start_time, avg_heart_rate, avg_oxygen_saturation, resolution)
+        INSERT INTO vital_signs_summary (device_code, start_time, heart_rate, oxygen_saturation, resolution)
         SELECT 
           device_code,
           date_trunc('second', start_time) 
             - (EXTRACT(EPOCH FROM start_time)::int % EXTRACT(EPOCH FROM INTERVAL '${interval}')) * INTERVAL '1 second' AS start_time,
-          AVG(avg_heart_rate) AS avg_heart_rate,
-          AVG(avg_oxygen_saturation) AS avg_oxygen_saturation,
+          AVG(heart_rate) AS heart_rate,
+          AVG(oxygen_saturation) AS oxygen_saturation,
           '${resolution}' AS resolution
         FROM ${sourceTable}
         WHERE start_time < NOW() - INTERVAL '${olderThan}'

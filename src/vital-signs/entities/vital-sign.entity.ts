@@ -15,8 +15,8 @@ export class VitalSign {
   @Column({ name: 'device_code' })
   deviceCode: string;
 
-  @Column({ type: 'timestamp', name: 'time_stamp' })
-  timeStamp: Date;
+  @Column({ type: 'timestamp', name: 'start_time' })
+  startTime: Date;
 
   @Column('int', { name: 'heart_rate' })
   heartRate: number;

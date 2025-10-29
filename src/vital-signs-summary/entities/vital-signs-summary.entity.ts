@@ -13,11 +13,11 @@ export class VitalSignsSummary {
   @Column({ type: 'timestamp', name: 'start_time' })
   startTime: Date;
 
-  @Column({ name: 'avg_heart_rate' })
-  avgHeartRate: number;
+  @Column({ name: 'heart_rate' })
+  HeartRate: number;
 
-  @Column({ name: 'avg_oxygen_saturation' })
-  avgOxygenSaturation: number;
+  @Column({ name: 'oxygen_saturation' })
+  oxygenSaturation: number;
 
   @Column({ type: 'enum', enum: ResolutionVitalSigns, name: 'resolution' })
   resolution: ResolutionVitalSigns;

@@ -4,12 +4,16 @@ import { Repository } from 'typeorm';
 import { VitalSign } from './entities/vital-sign.entity';
 import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { UpdateVitalSignDto } from './dto/update-vital-sign.dto';
+import { NotificationsService } from 'src/notifications/notifications.service';
+import { VitalSignsAlertService } from 'src/vital-signs-alert/vital-signs-alert.service';
 
 @Injectable()
 export class VitalSignService {
   constructor(
     @InjectRepository(VitalSign)
     private readonly vitalSignRepository: Repository<VitalSign>,
+    private readonly notificationService: NotificationsService,
+    private readonly vitalStatsAlertService: VitalSignsAlertService,
   ) {}
 
   async create(createVitalSignDto: CreateVitalSignDto): Promise<VitalSign> {
@@ -20,7 +24,9 @@ export class VitalSignService {
       oxygenSaturation: createVitalSignDto.oxygenSaturation,
     };
     const vitalSign = this.vitalSignRepository.create(withDate);
-    return this.vitalSignRepository.save(vitalSign);
+    const vitalSignSaved = this.vitalSignRepository.save(vitalSign);
+    //verificamos si significa una alerta
+    return vitalSignSaved;
   }
 
   async findAll(): Promise<VitalSign[]> {

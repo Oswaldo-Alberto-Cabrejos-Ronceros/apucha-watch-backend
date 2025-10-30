@@ -10,6 +10,7 @@ import {
 } from 'typeorm';
 import { VitalSignAlertSeverity } from '../enums/vital-sign-alert-severity';
 import { VitalSignAlertType } from '../enums/vital-sign-alert-type';
+import { VitalSign } from 'src/vital-signs/entities/vital-sign.entity';
 
 @Entity()
 export class VitalSignsAlert {
@@ -21,6 +22,9 @@ export class VitalSignsAlert {
   )
   @JoinColumn({ name: 'senior_citizen_profile_id' })
   seniorCitizenProfile: SeniorCitizenProfile;
+
+  @JoinColumn({ name: 'vital_sign_id' })
+  vitalSign: VitalSign;
 
   @CreateDateColumn()
   timestamp: Date;

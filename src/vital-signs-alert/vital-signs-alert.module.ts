@@ -8,5 +8,6 @@ import { VitalSignsAlert } from './entities/vital-signs-alert.entity';
   imports: [TypeOrmModule.forFeature([VitalSignsAlert])],
   controllers: [VitalSignsAlertController],
   providers: [VitalSignsAlertService],
+  exports: [VitalSignsAlertService],
 })
 export class VitalSignsAlertModule {}

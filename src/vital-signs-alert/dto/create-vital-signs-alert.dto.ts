@@ -7,6 +7,10 @@ export class CreateVitalSignsAlertDto {
   @IsNotEmpty()
   seniorCitizenProfileId: number;
 
+  @IsInt()
+  @IsNotEmpty()
+  vitalSignId: number;
+
   @IsEnum(VitalSignAlertType)
   type: VitalSignAlertType;
 

@@ -17,6 +17,9 @@ export class VitalSignsAlertService {
       seniorCitizenProfile: {
         id: createVitalSignsAlertDto.seniorCitizenProfileId,
       },
+      vitalSign: {
+        id: createVitalSignsAlertDto.vitalSignId,
+      },
     });
     return await this.repo.save(entity);
   }

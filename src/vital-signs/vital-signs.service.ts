@@ -6,83 +6,137 @@ import { CreateVitalSignDto } from './dto/create-vital-sign.dto';
 import { UpdateVitalSignDto } from './dto/update-vital-sign.dto';
 import { NotificationsService } from 'src/notifications/notifications.service';
 import { VitalSignsAlertService } from 'src/vital-signs-alert/vital-signs-alert.service';
+import { CreateVitalSignsAlertDto } from 'src/vital-signs-alert/dto/create-vital-signs-alert.dto';
+import { VitalSignAlertType } from 'src/vital-signs-alert/enums/vital-sign-alert-type';
+import { VitalSignAlertSeverity } from 'src/vital-signs-alert/enums/vital-sign-alert-severity';
+import { SeniorCitizenProfileService } from 'src/senior-citizen-profile/senior-citizen-profile.service';
+import { CaredSeniorCitizenService } from 'src/cared-senior-citizen/cared-senior-citizen.service';
 
 @Injectable()
 export class VitalSignService {
   constructor(
     @InjectRepository(VitalSign)
     private readonly vitalSignRepository: Repository<VitalSign>,
-    private readonly notificationService: NotificationsService,
+    private readonly notificationsService: NotificationsService,
     private readonly vitalStatsAlertService: VitalSignsAlertService,
+    private readonly seniorCitizenProfileService: SeniorCitizenProfileService,
+    private readonly caredSeniorCitizenService: CaredSeniorCitizenService,
   ) {}
 
   async create(createVitalSignDto: CreateVitalSignDto): Promise<VitalSign> {
-    const withDate = {
+    //obtenemos el senior citizen relacionado al deviceCode
+    const seniorCitizenProfile =
+      await this.seniorCitizenProfileService.findOneByDeviceCode(
+        createVitalSignDto.deviceCode,
+      );
+
+    const withDateAndSeniorId = {
+      seniorCitizenProfile: {
+        id: seniorCitizenProfile.id,
+      },
       deviceCode: createVitalSignDto.deviceCode,
       timeStamp: new Date(),
       heartRate: createVitalSignDto.heartRate,
       oxygenSaturation: createVitalSignDto.oxygenSaturation,
     };
-    const vitalSign = this.vitalSignRepository.create(withDate);
-    const vitalSignSaved = this.vitalSignRepository.save(vitalSign);
+    const vitalSign = this.vitalSignRepository.create(withDateAndSeniorId);
+    const vitalSignSaved = await this.vitalSignRepository.save(vitalSign);
     //verificamos si significa una alerta
-    if(vitalSignSaved.HeartRate<= 55 && vitalSignSaved.HeartRate>50){
-await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.BRADICARDIA,
-    severity:VitalSignAlertSeverity.LEVE
-  } as CreateVitalSignsAlertDto
-  )
-      
-    } else if(vitalSignSaved.HeartRate<= 50){
-      await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.BRADICARDIA,
-    severity:VitalSignAlertSeverity.GRAVE
-  } as CreateVitalSignsAlertDto
-  )
-    } else if (vitalSignSaved.HeartRate>= 100 && vitalSignSaved.HeartRate<120){
-      await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.TAQUICARDIA,
-    severity:VitalSignAlertSeverity.LEVE
-  } as CreateVitalSignsAlertDto
-  )
-    } else if (vitalSignSaved.HeartRate>120){
-      await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.TAQUICARDIA,
-    severity:VitalSignAlertSeverity.GRAVE
-  } as CreateVitalSignsAlertDto
-  )
+    if (vitalSignSaved.heartRate <= 55 && vitalSignSaved.heartRate > 50) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: 1,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.BRADICARDIA,
+        severity: VitalSignAlertSeverity.LEVE,
+      } as CreateVitalSignsAlertDto);
+    } else if (vitalSignSaved.heartRate <= 50) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: vitalSignSaved.seniorCitizenProfile.id,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.BRADICARDIA,
+        severity: VitalSignAlertSeverity.GRAVE,
+      } as CreateVitalSignsAlertDto);
+      //obtenemos relaciones
+      const relations =
+        await this.caredSeniorCitizenService.getAllBySeniorCitizenProfileId(
+          vitalSignSaved.seniorCitizenProfile.id,
+        );
+      //informamos a todo los cuidadores
+      for (const relation of relations) {
+        const token = relation.caredProfile.deviceToken;
+        if (!token) continue;
+        await this.notificationsService.sendNotification(
+          token,
+          'Señales de Bradicardia',
+          'Ingrese a la aplicación',
+        );
+      }
+    } else if (
+      vitalSignSaved.heartRate >= 100 &&
+      vitalSignSaved.heartRate < 120
+    ) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: vitalSignSaved.seniorCitizenProfile.id,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.TAQUICARDIA,
+        severity: VitalSignAlertSeverity.LEVE,
+      } as CreateVitalSignsAlertDto);
+    } else if (vitalSignSaved.heartRate > 120) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: vitalSignSaved.seniorCitizenProfile.id,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.TAQUICARDIA,
+        severity: VitalSignAlertSeverity.GRAVE,
+      } as CreateVitalSignsAlertDto);
+      //obtenemos relaciones
+      const relations =
+        await this.caredSeniorCitizenService.getAllBySeniorCitizenProfileId(
+          vitalSignSaved.seniorCitizenProfile.id,
+        );
+      //informamos a todo los cuidadores
+      for (const relation of relations) {
+        const token = relation.caredProfile.deviceToken;
+        if (!token) continue;
+        await this.notificationsService.sendNotification(
+          token,
+          'Señales de Taquicardia',
+          'Ingrese a la aplicación',
+        );
+      }
     }
-  if(vitalSignSave.oxygenSaturation<=94 &&vitalSignSave.oxygenSaturation>=90){
-    await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.TAQUICARDIA,
-    severity:VitalSignAlertSeverity.LEVE
-  } as CreateVitalSignsAlertDto
-  )
-  } else if (vitalSignSaved.oxygenSaturation<90){
-    await this.vitalStatsAlertService.create(
-  {
-   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
-   vitalSignId:vitalSignSaved.id,
-    type: VitalSignAlertType.HIPOXEMIA,
-    severity:VitalSignAlertSeverity.GRAVE
-  } as CreateVitalSignsAlertDto
-  )
-  }
+    if (
+      vitalSignSaved.oxygenSaturation <= 94 &&
+      vitalSignSaved.oxygenSaturation >= 90
+    ) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: vitalSignSaved.seniorCitizenProfile.id,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.TAQUICARDIA,
+        severity: VitalSignAlertSeverity.LEVE,
+      } as CreateVitalSignsAlertDto);
+    } else if (vitalSignSaved.oxygenSaturation < 90) {
+      await this.vitalStatsAlertService.create({
+        seniorCitizenProfileId: vitalSignSaved.seniorCitizenProfile.id,
+        vitalSignId: vitalSignSaved.id,
+        type: VitalSignAlertType.HIPOXEMIA,
+        severity: VitalSignAlertSeverity.GRAVE,
+      } as CreateVitalSignsAlertDto);
+      //obtenemos relaciones
+      const relations =
+        await this.caredSeniorCitizenService.getAllBySeniorCitizenProfileId(
+          vitalSignSaved.seniorCitizenProfile.id,
+        );
+      //informamos a todo los cuidadores
+      for (const relation of relations) {
+        const token = relation.caredProfile.deviceToken;
+        if (!token) continue;
+        await this.notificationsService.sendNotification(
+          token,
+          'Señales de Hipoxemia',
+          'Ingrese a la aplicación',
+        );
+      }
+    }
     return vitalSignSaved;
   }
 

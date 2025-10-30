@@ -8,6 +8,8 @@ import { DeviceRoomModule } from 'src/device-room/device-room.module';
 import { NotificationsModule } from 'src/notifications/notifications.module';
 import { VitalSignsAlertModule } from 'src/vital-signs-alert/vital-signs-alert.module';
 import { VitalSignsAlert } from 'src/vital-signs-alert/entities/vital-signs-alert.entity';
+import { SeniorCitizenProfileModule } from 'src/senior-citizen-profile/senior-citizen-profile.module';
+import { CaredSeniorCitizenModule } from 'src/cared-senior-citizen/cared-senior-citizen.module';
 
 @Module({
   imports: [
@@ -15,6 +17,8 @@ import { VitalSignsAlert } from 'src/vital-signs-alert/entities/vital-signs-aler
     DeviceRoomModule,
     NotificationsModule,
     VitalSignsAlertModule,
+    SeniorCitizenProfileModule,
+    CaredSeniorCitizenModule,
   ],
   controllers: [VitalSignController],
   providers: [VitalSignService, VitalSignsGateway],

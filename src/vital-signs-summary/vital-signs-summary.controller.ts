@@ -46,7 +46,7 @@ export class VitalSignsSummaryController {
   @Get('dayStats/:deviceCode/:day')
   findAllByDayForStats(
     @Param('deviceCode') deviceCode: string,
-    @Param('day', ParseDatePipe) day: Date,
+    @Param('day', new ParseDatePipe()) day: Date,
   ) {
     return this.vitalSignsSummaryService.findAllByDayForStats(deviceCode, day);
   }

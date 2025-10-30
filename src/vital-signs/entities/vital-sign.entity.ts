@@ -6,6 +6,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { Device } from '../../device/entities/device.entity';
+import { SeniorCitizenProfile } from 'src/senior-citizen-profile/entities/senior-citizen-profile.entity';
 
 @Entity({ name: 'vital_signs' })
 export class VitalSign {
@@ -17,6 +18,10 @@ export class VitalSign {
 
   @Column({ type: 'timestamp', name: 'start_time' })
   startTime: Date;
+
+  @ManyToOne(() => SeniorCitizenProfile)
+  @JoinColumn({ name: 'senior_citizen_profile_id' })
+  seniorCitizenProfile: SeniorCitizenProfile;
 
   @Column('int', { name: 'heart_rate' })
   heartRate: number;

@@ -1,4 +1,11 @@
-import { Controller, Get, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Delete,
+  ParseIntPipe,
+  ParseDatePipe,
+} from '@nestjs/common';
 import { VitalSignsSummaryService } from './vital-signs-summary.service';
 import { ResolutionVitalSigns } from './enums/resolution.enum';
 
@@ -22,6 +29,26 @@ export class VitalSignsSummaryController {
       deviceCode,
       resolution,
     );
+  }
+
+  @Get('lastHourStats/:deviceCode')
+  findAllLastHourForStats(@Param('deviceCode') deviceCode: string) {
+    return this.vitalSignsSummaryService.findAllLastHourForStats(deviceCode);
+  }
+
+  @Get('lastTwelveHoursStats/:deviceCode')
+  findAllLastTwelveHoursForStats(@Param('deviceCode') deviceCode: string) {
+    return this.vitalSignsSummaryService.findAllLastTwelveHoursForStats(
+      deviceCode,
+    );
+  }
+
+  @Get('dayStats/:deviceCode/:day')
+  findAllByDayForStats(
+    @Param('deviceCode') deviceCode: string,
+    @Param('day', ParseDatePipe) day: Date,
+  ) {
+    return this.vitalSignsSummaryService.findAllByDayForStats(deviceCode, day);
   }
 
   @Delete(':id')

@@ -26,6 +26,17 @@ export class VitalSignService {
     const vitalSign = this.vitalSignRepository.create(withDate);
     const vitalSignSaved = this.vitalSignRepository.save(vitalSign);
     //verificamos si significa una alerta
+    if(vitalSignSaved.HeartRate<= 55){
+await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.BRADICARDIA,
+    severity:VitalSignAlertSeverity.LEVE
+  } as CreateVitalSignsAlertDto
+)
+      
+    }
     return vitalSignSaved;
   }
 

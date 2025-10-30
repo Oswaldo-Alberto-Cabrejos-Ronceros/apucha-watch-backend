@@ -64,7 +64,25 @@ await this.vitalStatsAlertService.create(
   } as CreateVitalSignsAlertDto
   )
     }
-  
+  if(vitalSignSave.oxygenSaturation<=94 &&vitalSignSave.oxygenSaturation>=90){
+    await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.TAQUICARDIA,
+    severity:VitalSignAlertSeverity.LEVE
+  } as CreateVitalSignsAlertDto
+  )
+  } else if (vitalSignSaved.oxygenSaturation<90){
+    await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.HIPOXEMIA,
+    severity:VitalSignAlertSeverity.GRAVE
+  } as CreateVitalSignsAlertDto
+  )
+  }
     return vitalSignSaved;
   }
 

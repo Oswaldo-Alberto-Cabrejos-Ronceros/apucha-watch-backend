@@ -26,7 +26,7 @@ export class VitalSignService {
     const vitalSign = this.vitalSignRepository.create(withDate);
     const vitalSignSaved = this.vitalSignRepository.save(vitalSign);
     //verificamos si significa una alerta
-    if(vitalSignSaved.HeartRate<= 55){
+    if(vitalSignSaved.HeartRate<= 55 && vitalSignSaved.HeartRate>50){
 await this.vitalStatsAlertService.create(
   {
    seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
@@ -34,9 +34,37 @@ await this.vitalStatsAlertService.create(
     type: VitalSignAlertType.BRADICARDIA,
     severity:VitalSignAlertSeverity.LEVE
   } as CreateVitalSignsAlertDto
-)
+  )
       
+    } else if(vitalSignSaved.HeartRate<= 50){
+      await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.BRADICARDIA,
+    severity:VitalSignAlertSeverity.GRAVE
+  } as CreateVitalSignsAlertDto
+  )
+    } else if (vitalSignSaved.HeartRate>= 100 && vitalSignSaved.HeartRate<120){
+      await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.TAQUICARDIA,
+    severity:VitalSignAlertSeverity.LEVE
+  } as CreateVitalSignsAlertDto
+  )
+    } else if (vitalSignSaved.HeartRate>120){
+      await this.vitalStatsAlertService.create(
+  {
+   seniorCitizenProfileId: vitalSignSaved.seniorCitizenId,
+   vitalSignId:vitalSignSaved.id,
+    type: VitalSignAlertType.TAQUICARDIA,
+    severity:VitalSignAlertSeverity.GRAVE
+  } as CreateVitalSignsAlertDto
+  )
     }
+  
     return vitalSignSaved;
   }
 

@@ -35,7 +35,7 @@ export class VitalSignService {
         id: seniorCitizenProfile.id,
       },
       deviceCode: createVitalSignDto.deviceCode,
-      timeStamp: new Date(),
+      startTime: new Date(),
       heartRate: createVitalSignDto.heartRate,
       oxygenSaturation: createVitalSignDto.oxygenSaturation,
     };

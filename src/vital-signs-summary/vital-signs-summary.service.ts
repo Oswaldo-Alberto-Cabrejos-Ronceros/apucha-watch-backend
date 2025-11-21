@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { VitalSignsSummary } from './entities/vital-signs-summary.entity';
-import { MoreThan, Repository } from 'typeorm';
+import { Between, MoreThan, Repository } from 'typeorm';
 import { ResolutionVitalSigns } from './enums/resolution.enum';
 import { VitalSignsStats } from './dto/vital-signs-stats-response.dto';
 
@@ -119,14 +119,15 @@ export class VitalSignsSummaryService {
     deviceCode: string,
     day: Date,
   ): Promise<VitalSignsStats> {
-    day.setHours(0);
-    day.setMinutes(0);
-    day.setSeconds(0);
-    day.setMilliseconds(0);
+    const startOfDay = new Date(day);
+    startOfDay.setHours(0, 0, 0, 0);
+
+    const endOfDay = new Date(day);
+    endOfDay.setHours(23, 59, 59, 999);
     const vitalSigns = await this.vitalSignsRepo.find({
       where: {
         deviceCode: deviceCode,
-        startTime: MoreThan(day),
+        startTime: Between(startOfDay, endOfDay),
       },
     });
     const statsHeartRate = vitalSigns
